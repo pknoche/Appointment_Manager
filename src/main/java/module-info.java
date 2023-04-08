@@ -1,6 +1,7 @@
 module pknoche.scheduling_application {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens pknoche.scheduling_application to javafx.fxml;
