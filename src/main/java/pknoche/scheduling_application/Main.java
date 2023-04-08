@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pknoche.scheduling_application.database.JDBC;
+import pknoche.scheduling_application.database.DatabaseConnection;
 
 import java.io.IOException;
 
@@ -19,8 +19,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        JDBC.openConnection();
+        DatabaseConnection.openConnection();
         launch();
-        JDBC.closeConnection();
+        DatabaseConnection.closeConnection();
     }
 }

@@ -2,6 +2,7 @@ module pknoche.scheduling_application {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires mysql.connector.j;
 
 
     opens pknoche.scheduling_application to javafx.fxml;

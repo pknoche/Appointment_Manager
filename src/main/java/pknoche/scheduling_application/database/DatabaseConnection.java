@@ -2,9 +2,8 @@ package pknoche.scheduling_application.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
-public abstract class JDBC {
+public abstract class DatabaseConnection {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
     private static final String server = "//localhost/";

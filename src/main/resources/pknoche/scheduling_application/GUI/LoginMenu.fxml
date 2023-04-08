@@ -29,7 +29,10 @@
                         <Font name="System Bold" size="13.0" />
                     </font>
                 </Label>
-                <Label fx:id="passwordLabel" text="Password" GridPane.rowIndex="1" />
+                <Label fx:id="passwordLabel" text="Password" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font></Label>
             </children>
         </GridPane>
         <Button fx:id="loginButton" layoutX="273.0" layoutY="253.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="Login" AnchorPane.leftAnchor="273.0" AnchorPane.rightAnchor="278.0" />
