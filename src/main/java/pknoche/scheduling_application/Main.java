@@ -1,12 +1,16 @@
 package pknoche.scheduling_application;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pknoche.scheduling_application.database.AppointmentDAO;
 import pknoche.scheduling_application.database.DatabaseConnection;
+import pknoche.scheduling_application.model.Appointment;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Main extends Application {
     @Override
@@ -20,6 +24,11 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         DatabaseConnection.openConnection();
+
+        /*AppointmentDAO appointmentDAO = new AppointmentDAO();
+        ObservableList<Appointment> allAppointments = appointmentDAO.getAll();
+        System.out.println(allAppointments.size());*/
+
         launch();
         DatabaseConnection.closeConnection();
     }

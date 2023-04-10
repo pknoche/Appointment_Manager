@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pknoche.scheduling_application.controller.MainMenuController">
+  <tabs>
+    <Tab text="Appointments">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="appointmentsTable" layoutX="25.0" layoutY="109.0" prefHeight="837.0" prefWidth="1869.0">
+                    <columns>
+                      <TableColumn fx:id="appointmentIdCol" prefWidth="98.0" text="Appointment ID" />
+                      <TableColumn fx:id="titleCol" prefWidth="151.0" text="Title" />
+                        <TableColumn fx:id="descriptionCol" prefWidth="425.0" text="Description" />
+                        <TableColumn fx:id="locationCol" minWidth="0.0" prefWidth="124.0" text="Location" />
+                        <TableColumn fx:id="contactCol" prefWidth="121.0" text="Contact" />
+                        <TableColumn fx:id="typeCol" prefWidth="182.0" text="Type" />
+                        <TableColumn fx:id="startCol" prefWidth="275.0" text="Start" />
+                        <TableColumn fx:id="endCol" prefWidth="275.0" text="End" />
+                        <TableColumn fx:id="customerIdCol" prefWidth="86.0" text="Customer ID" />
+                        <TableColumn fx:id="userIdCol" prefWidth="108.0" text="User ID" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Customers">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+      </content>
+    </Tab>
+      <Tab text="Reports">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>
