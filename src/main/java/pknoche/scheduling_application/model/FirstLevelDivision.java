@@ -2,37 +2,39 @@ package pknoche.scheduling_application.model;
 
 import java.sql.Timestamp;
 
-public class Country {
-    private int Country_ID;
-    private String Country;
+public class FirstLevelDivision {
+    private int Division_ID;
+    private String Division;
     private Timestamp Create_Date;
     private String Created_By;
     private Timestamp Last_Update;
     private String Last_Updated_By;
+    private int Country_ID;
 
-    public Country(int country_ID, String country, Timestamp create_Date, String created_By, Timestamp last_Update, String last_Updated_By) {
-        Country_ID = country_ID;
-        Country = country;
+    public FirstLevelDivision(int division_ID, String division, Timestamp create_Date, String created_By, Timestamp last_Update, String last_Updated_By, int country_ID) {
+        Division_ID = division_ID;
+        Division = division;
         Create_Date = create_Date;
         Created_By = created_By;
         Last_Update = last_Update;
         Last_Updated_By = last_Updated_By;
-    }
-
-    public int getCountry_ID() {
-        return Country_ID;
-    }
-
-    public void setCountry_ID(int country_ID) {
         Country_ID = country_ID;
     }
 
-    public String getCountry() {
-        return Country;
+    public int getDivision_ID() {
+        return Division_ID;
     }
 
-    public void setCountry(String country) {
-        Country = country;
+    public void setDivision_ID(int division_ID) {
+        Division_ID = division_ID;
+    }
+
+    public String getDivision() {
+        return Division;
+    }
+
+    public void setDivision(String division) {
+        Division = division;
     }
 
     public Timestamp getCreate_Date() {
@@ -65,5 +67,13 @@ public class Country {
 
     public void setLast_Updated_By(String last_Updated_By) {
         Last_Updated_By = last_Updated_By;
+    }
+
+    public int getCountry_ID() {
+        return Country_ID;
+    }
+
+    public void setCountry_ID(int country_ID) {
+        Country_ID = country_ID;
     }
 }
