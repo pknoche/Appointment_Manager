@@ -22,8 +22,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="205.0" GridPane.columnIndex="1" />
-                <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="205.0" text="test" GridPane.columnIndex="1" />
+                <PasswordField fx:id="passwordField" text="test" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label fx:id="usernameLabel" text="Username">
                     <font>
                         <Font name="System Bold" size="13.0" />

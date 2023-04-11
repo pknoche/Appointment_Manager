@@ -11,31 +11,24 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Optional;
 
-public class AppointmentDAO implements DAO<Appointment>{
-    private ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+public class AppointmentDAO {
+    private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
-    @Override
-    public void Create(Appointment appointment) {
-
-    }
-
-    @Override
-    public void Read(Appointment appointment) {
+    public static void Create(Appointment appointment) {
 
     }
 
-    @Override
-    public void Update(Appointment appointment) {
+    public static void Read(String appointmentId) {
 
     }
 
-    @Override
-    public void Delete(Appointment appointment) {
-
+    public static void Update(String appointmentId) {
     }
 
-    @Override
-    public ObservableList<Appointment> getAll() {
+    public static void Delete(String appointmentId) {
+    }
+
+    public static ObservableList<Appointment> getAll() {
         try {
         String sql = "SELECT * FROM client_schedule.appointments";
         PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
