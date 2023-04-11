@@ -6,12 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pknoche.scheduling_application.Main;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SceneChanger {
+public class GUI_Navigator {
     /**
      * Associates menu name with resource path of FXML document pertaining to menu.
      * @param menuName menu name to be located
@@ -21,27 +22,40 @@ public class SceneChanger {
         Map<String, String> resourcePath = new HashMap<String, String>();
         resourcePath.put("LoginMenu", "/pknoche/scheduling_application/GUI/LoginMenu.fxml");
         resourcePath.put("MainMenu", "/pknoche/scheduling_application/GUI/MainMenu.fxml");
+        resourcePath.put("AddModifyAppointment", "/pknoche/scheduling_application/GUI/AddModifyAppointment.fxml");
+        resourcePath.put("AddModifyCustomer", "/pknoche/scheduling_application/GUI/AddModifyCustomer.fxml");
         return resourcePath.get(menuName);
     }
 
     /**
      * Gets stage and sets scene for specified menu to be navigated to.
      * @param menuName name of menu to be loaded
+     * @param stageName name to set stage to
      * @param actionEvent button pressed
-     * @return stage so that it can be used by the calling method to set stage title to appropriate value
-     * @throws IOException
      */
-    public static Stage menuNavigator(String menuName, ActionEvent actionEvent) {
+    public static void replaceScene(String menuName, String stageName, ActionEvent actionEvent) {
         try {
-            Parent root = FXMLLoader.load(SceneChanger.class.getResource(resourceLocator(menuName)));
+            Parent root = FXMLLoader.load(GUI_Navigator.class.getResource(resourceLocator(menuName)));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
+            stage.setTitle(stageName);
             stage.setScene(scene);
             stage.show();
-            return stage;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+    }
+
+    public static void newStage(String menuName, String stageName, ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(GUI_Navigator.class.getResource(resourceLocator(menuName)));
+            Scene scene = new Scene(root);
+            stage.setTitle(stageName);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

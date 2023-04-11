@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class DatabaseLogin {
+public abstract class LoginDAO {
     private static String currentUser;
 
     public static boolean isLoginValid(String username, String password) {

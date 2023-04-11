@@ -1,5 +1,7 @@
 package pknoche.scheduling_application.model;
 
+import pknoche.scheduling_application.helper.TimeConversion;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -9,13 +11,13 @@ public class Customer {
     private String Address;
     private String Postal_Code;
     private String Phone;
-    private Timestamp Create_Date;
+    private LocalDateTime Create_Date;
     private String Created_By;
-    private Timestamp Last_Update;
+    private LocalDateTime Last_Update;
     private String Last_Updated_By;
     private int Division_ID;
 
-    public Customer(int customer_ID, String customer_Name, String address, String postal_Code, String phone, Timestamp create_Date, String created_By, Timestamp last_Update, String last_Updated_By, int division_ID) {
+    public Customer(int customer_ID, String customer_Name, String address, String postal_Code, String phone, LocalDateTime create_Date, String created_By, LocalDateTime last_Update, String last_Updated_By, int division_ID) {
         Customer_ID = customer_ID;
         Customer_Name = customer_Name;
         Address = address;
@@ -68,11 +70,15 @@ public class Customer {
         Phone = phone;
     }
 
-    public Timestamp getCreate_Date() {
+    public LocalDateTime getCreate_Date() {
         return Create_Date;
     }
 
-    public void setCreate_Date(Timestamp create_Date) {
+    public String getFormattedCreate_Date() {
+        return TimeConversion.toFormattedString(getCreate_Date());
+    }
+
+    public void setCreate_Date(LocalDateTime create_Date) {
         Create_Date = create_Date;
     }
 
@@ -84,11 +90,15 @@ public class Customer {
         Created_By = created_By;
     }
 
-    public Timestamp getLast_Update() {
+    public LocalDateTime getLast_Update() {
         return Last_Update;
     }
 
-    public void setLast_Update(Timestamp last_Update) {
+    public String getFormattedLast_Update() {
+        return TimeConversion.toFormattedString(getLast_Update());
+    }
+
+    public void setLast_Update(LocalDateTime last_Update) {
         Last_Update = last_Update;
     }
 

@@ -2,8 +2,10 @@ package pknoche.scheduling_application.model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pknoche.scheduling_application.helper.TimeConversion;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Appointment {
     private int Appointment_ID;
@@ -11,17 +13,17 @@ public class Appointment {
     private String Description;
     private String Location;
     private String Type;
-    private Timestamp Start;
-    private Timestamp End;
-    private Timestamp Create_Date;
+    private LocalDateTime Start;
+    private LocalDateTime End;
+    private LocalDateTime Create_Date;
     private String Created_By;
-    private Timestamp Last_Update;
+    private LocalDateTime Last_Update;
     private String Last_Updated_By;
     private int Customer_ID;
     private int User_ID;
     private int Contact_ID;
 
-    public Appointment(int appointment_ID, String title, String description, String location, String type, Timestamp start, Timestamp end, Timestamp create_Date, String created_By, Timestamp last_Update, String last_Updated_By, int customer_ID, int user_ID, int contact_ID) {
+    public Appointment(int appointment_ID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, LocalDateTime create_Date, String created_By, LocalDateTime last_Update, String last_Updated_By, int customer_ID, int user_ID, int contact_ID) {
         Appointment_ID = appointment_ID;
         Title = title;
         Description = description;
@@ -78,27 +80,35 @@ public class Appointment {
         Type = type;
     }
 
-    public Timestamp getStart() {
+    public LocalDateTime getStart() {
         return Start;
     }
 
-    public void setStart(Timestamp start) {
+    public String getFormattedStart() {
+        return TimeConversion.toFormattedString(getStart());
+    }
+
+    public void setStart(LocalDateTime start) {
         Start = start;
     }
 
-    public Timestamp getEnd() {
+    public LocalDateTime getEnd() {
         return End;
     }
 
-    public void setEnd(Timestamp end) {
+    public String getFormattedEnd() {
+        return TimeConversion.toFormattedString(getEnd());
+    }
+
+    public void setEnd(LocalDateTime end) {
         End = end;
     }
 
-    public Timestamp getCreate_Date() {
+    public LocalDateTime getCreate_Date() {
         return Create_Date;
     }
 
-    public void setCreate_Date(Timestamp create_Date) {
+    public void setCreate_Date(LocalDateTime create_Date) {
         Create_Date = create_Date;
     }
 
@@ -110,11 +120,11 @@ public class Appointment {
         Created_By = created_By;
     }
 
-    public Timestamp getLast_Update() {
+    public LocalDateTime getLast_Update() {
         return Last_Update;
     }
 
-    public void setLast_Update(Timestamp last_Update) {
+    public void setLast_Update(LocalDateTime last_Update) {
         Last_Update = last_Update;
     }
 
