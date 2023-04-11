@@ -7,10 +7,14 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pknoche.scheduling_application.database.AppointmentDAO;
 import pknoche.scheduling_application.database.DatabaseConnection;
+import pknoche.scheduling_application.database.LoginDAO;
 import pknoche.scheduling_application.model.Appointment;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Clock;
+import java.time.LocalDateTime;
 
 public class Main extends Application {
     @Override

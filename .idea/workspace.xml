@@ -4,16 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a89624a1-f6ac-45d0-b30e-9614bbcafad9" name="Changes" comment="Implemented appointments table view">
-      <change afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/CustomerDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/TimeConversion.java" afterDir="false" />
+    <list default="true" id="a89624a1-f6ac-45d0-b30e-9614bbcafad9" name="Changes" comment="Implemented customers table view">
+      <change afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/AddModifyAppointmentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/AddModifyCustomerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/AddModifyAppointment.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/AddModifyCustomer.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/MainMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/AppointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/AppointmentDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/DAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/DatabaseLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/DatabaseLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/LoginMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/LoginMenu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/MainMenu.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/CustomerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/DatabaseLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/LoginDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/SceneChanger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/GUI_Navigator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/TimeConversion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/TimeConversion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Customer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +30,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Interface" />
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -119,7 +125,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681092498907</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Implemented customers table view">
+      <created>1681172437681</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681172437681</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -138,7 +151,8 @@
     <MESSAGE value="Added JDBC driver and database connection methods" />
     <MESSAGE value="Added login logic" />
     <MESSAGE value="Implemented appointments table view" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented appointments table view" />
+    <MESSAGE value="Implemented customers table view" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented customers table view" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
