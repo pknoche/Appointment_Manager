@@ -6,13 +6,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pknoche.scheduling_application.Main;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GUI_Navigator {
+public abstract class GUI_Navigator {
     /**
      * Associates menu name with resource path of FXML document pertaining to menu.
      * @param menuName menu name to be located
@@ -33,10 +32,10 @@ public class GUI_Navigator {
      * @param stageName name to set stage to
      * @param actionEvent button pressed
      */
-    public static void replaceScene(String menuName, String stageName, ActionEvent actionEvent) {
+    public static void replaceScene(String menuName, String stageName, ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(GUI_Navigator.class.getResource(resourceLocator(menuName)));
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle(stageName);
             stage.setScene(scene);
@@ -46,7 +45,7 @@ public class GUI_Navigator {
         }
     }
 
-    public static void newStage(String menuName, String stageName, ActionEvent actionEvent) {
+    public static void newStage(String menuName, String stageName) {
         try {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(GUI_Navigator.class.getResource(resourceLocator(menuName)));
@@ -57,5 +56,10 @@ public class GUI_Navigator {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void closeStage(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 }

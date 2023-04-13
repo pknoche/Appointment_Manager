@@ -14,8 +14,8 @@
     <children>
         <ButtonBar layoutX="386.0" layoutY="746.0" prefHeight="40.0" prefWidth="200.0">
             <buttons>
-                <Button mnemonicParsing="false" text="Cancel" />
-                <Button mnemonicParsing="false" text="Save" />
+                <Button mnemonicParsing="false" onAction="#onCancelButtonClick" text="Cancel" />
+                <Button mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
             </buttons>
         </ButtonBar>
         <GridPane layoutX="26.0" layoutY="19.0" prefHeight="725.0" prefWidth="551.0">
@@ -27,6 +27,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -35,15 +36,17 @@
                 <Label text="Customer ID" />
                 <Label text="Customer Name" GridPane.rowIndex="1" />
                 <Label text="Address" GridPane.rowIndex="2" />
-                <Label text="Postal Code" GridPane.rowIndex="3" />
-                <Label text="Division ID" GridPane.rowIndex="4" />
-                <Label text="Phone" GridPane.rowIndex="5" />
+                <Label text="Postal Code" GridPane.rowIndex="4" />
+                <Label text="Division ID" GridPane.rowIndex="5" />
+                <Label text="Phone" GridPane.rowIndex="6" />
                 <TextField fx:id="customerIdField" editable="false" promptText="Auto Generated" GridPane.columnIndex="1" />
                 <TextField fx:id="customerNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <TextField fx:id="addressField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <ComboBox fx:id="postalCodeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <ComboBox fx:id="divisionIdCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <ComboBox fx:id="postalCodeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <ComboBox fx:id="divisionIdCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ComboBox fx:id="countryCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Country" GridPane.rowIndex="3" />
             </children>
         </GridPane>
     </children>

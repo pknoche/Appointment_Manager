@@ -2,16 +2,15 @@ package pknoche.scheduling_application.database;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pknoche.scheduling_application.model.Appointment;
+import pknoche.scheduling_application.helper.DialogBox;
 import pknoche.scheduling_application.model.Customer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public class CustomerDAO {
+public abstract class CustomerDAO {
     public static void create(Customer customer) {
 
     }
@@ -47,7 +46,8 @@ public class CustomerDAO {
                 allCustomers.add(customer);
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving customers from database.");
+            DialogBox.generateErrorMessage("Error retrieving customers from database.");
+            System.out.println(e.getMessage());
         }
         return allCustomers;
     }

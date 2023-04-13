@@ -117,4 +117,9 @@ public class Customer {
     public void setDivision_ID(int division_ID) {
         Division_ID = division_ID;
     }
+
+    @Override
+    public String toString() {
+        return Customer_ID + " - " + Customer_Name;
+    }
 }
