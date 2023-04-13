@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Appointment {
+    private static String[] appointmentTypes = {"Planning Session", "Debriefing", "New Client"};
     private int Appointment_ID;
     private String Title;
     private String Description;

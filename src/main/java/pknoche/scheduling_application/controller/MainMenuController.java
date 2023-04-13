@@ -104,12 +104,12 @@ public class MainMenuController implements Initializable {
     }
     @FXML
     void onCreateNewAppointmentButtonClick(ActionEvent event) {
-        GUI_Navigator.newStage("AddModifyAppointment", "Create Appointment", event);
+        GUI_Navigator.newStage("AddModifyAppointment", "Create Appointment");
 
     }
     @FXML
     void onModifyAppointmentButtonClick(ActionEvent event) {
-        GUI_Navigator.newStage("AddModifyAppointment", "Modify Appointment", event);
+        GUI_Navigator.newStage("AddModifyAppointment", "Modify Appointment");
 
     }
     @FXML
@@ -119,12 +119,12 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void onCreateNewCustomerButtonClick(ActionEvent event) {
-        GUI_Navigator.newStage("AddModifyCustomer", "Create Customer", event);
+        GUI_Navigator.newStage("AddModifyCustomer", "Create Customer");
     }
 
     @FXML
     void onModifyCustomerButtonClick(ActionEvent event) {
-        GUI_Navigator.newStage("AddModifyCustomer", "Modify Customer", event);
+        GUI_Navigator.newStage("AddModifyCustomer", "Modify Customer");
     }
     @FXML
     void onDeleteCustomerButtonClick(ActionEvent event) {

@@ -15,8 +15,8 @@
    <children>
       <ButtonBar layoutX="386.0" layoutY="746.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" text="Cancel" />
-            <Button mnemonicParsing="false" text="Save" />
+          <Button mnemonicParsing="false" onAction="#onCancelButtonClick" text="Cancel" />
+            <Button mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
         </buttons>
       </ButtonBar>
       <GridPane layoutX="26.0" layoutY="19.0" prefHeight="725.0" prefWidth="551.0">
@@ -57,9 +57,9 @@
             <ComboBox fx:id="customerIdCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <ComboBox fx:id="userIdCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <Label text="End Time" GridPane.rowIndex="8" />
-            <TextField fx:id="endTimeField" promptText="HH:MM" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="startTimeField" promptText="HH:MM" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <ComboBox fx:id="typeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="endTimeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <ComboBox fx:id="startTimeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>
    </children>

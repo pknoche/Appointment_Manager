@@ -13,8 +13,7 @@ import pknoche.scheduling_application.model.Appointment;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.Clock;
-import java.time.LocalDateTime;
+import java.time.*;
 
 public class Main extends Application {
     @Override
