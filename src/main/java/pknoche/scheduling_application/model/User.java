@@ -19,4 +19,9 @@ public class User {
     public String getUser_Name() {
         return User_Name;
     }
+
+    @Override
+    public String toString() {
+        return User_ID + " - " + User_Name;
+    }
 }

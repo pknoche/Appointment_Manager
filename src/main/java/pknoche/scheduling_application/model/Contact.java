@@ -3,12 +3,10 @@ package pknoche.scheduling_application.model;
 public class Contact {
     private int Contact_ID;
     private String Contact_Name;
-    private String Email;
 
-    public Contact(int contact_ID, String contact_Name, String email) {
+    public Contact(int contact_ID, String contact_Name) {
         Contact_ID = contact_ID;
         Contact_Name = contact_Name;
-        Email = email;
     }
 
     public int getContact_ID() {
@@ -27,11 +25,8 @@ public class Contact {
         Contact_Name = contact_Name;
     }
 
-    public String getEmail() {
-        return Email;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
+    @Override
+    public String toString() {
+        return Contact_ID + " - " + Contact_Name;
     }
 }

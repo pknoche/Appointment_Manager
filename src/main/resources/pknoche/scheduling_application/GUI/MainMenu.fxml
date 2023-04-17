@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pknoche.scheduling_application.controller.MainMenuController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pknoche.scheduling_application.controller.MainMenuController">
   <tabs>
     <Tab text="Appointments">
       <content>
@@ -26,12 +26,12 @@
                       <TableColumn fx:id="appointmentTitleCol" prefWidth="151.0" text="Title" />
                         <TableColumn fx:id="appointmentDescriptionCol" prefWidth="425.0" text="Description" />
                         <TableColumn fx:id="appointmentLocationCol" minWidth="0.0" prefWidth="124.0" text="Location" />
-                        <TableColumn fx:id="appointmentContactCol" prefWidth="121.0" text="Contact" />
+                        <TableColumn fx:id="appointmentContactCol" prefWidth="186.0" text="Contact" />
                         <TableColumn fx:id="appointmentTypeCol" prefWidth="182.0" text="Type" />
-                        <TableColumn fx:id="appointmentStartCol" prefWidth="275.0" text="Start" />
-                        <TableColumn fx:id="appointmentEndCol" prefWidth="275.0" text="End" />
-                        <TableColumn fx:id="appointmentCustomerIdCol" prefWidth="86.0" text="Customer ID" />
-                        <TableColumn fx:id="appointmentUserIdCol" prefWidth="108.0" text="User ID" />
+                        <TableColumn fx:id="appointmentStartCol" prefWidth="164.0" text="Start" />
+                        <TableColumn fx:id="appointmentEndCol" prefWidth="164.0" text="End" />
+                        <TableColumn fx:id="appointmentCustomerCol" prefWidth="186.0" text="Customer" />
+                        <TableColumn fx:id="appointmentUserCol" prefWidth="186.0" text="User" />
                     </columns>
                   </TableView>
                   <ButtonBar layoutX="25.0" layoutY="959.0" prefHeight="40.0" prefWidth="511.0">

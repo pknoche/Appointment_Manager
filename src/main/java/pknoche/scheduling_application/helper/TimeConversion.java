@@ -12,6 +12,11 @@ public abstract class TimeConversion {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd    HH:mm");
         return dtf.format(localDateTime);
     }
+    public static String toUTC(LocalDateTime localDateTime) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        ZonedDateTime UTCTime = ZonedDateTime.of(localDateTime,ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
+        return dtf.format(UTCTime) + " UTC";
+    }
 
     public static LocalTime LocalOpenTime() {
         ZonedDateTime hqOpenTime = ZonedDateTime.of(LocalDate.now(), openTime, timeZone);

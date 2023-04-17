@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public abstract class CustomerDAO {
+    private static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+
     public static void create(Customer customer) {
 
     }
@@ -26,8 +28,8 @@ public abstract class CustomerDAO {
     }
 
     public static ObservableList<Customer> getAll() {
-        ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         try {
+            allCustomers.clear();
             String sql = "SELECT * FROM client_schedule.customers";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -42,7 +44,8 @@ public abstract class CustomerDAO {
                 LocalDateTime last_Update = rs.getTimestamp("Last_Update").toLocalDateTime();
                 String last_Updated_By = rs.getString("Last_Updated_By");
                 int division_ID = rs.getInt("Division_ID");
-                Customer customer = new Customer(customer_ID, customer_Name, address, postal_Code, phone, create_Date, created_By, last_Update, last_Updated_By, division_ID);
+                Customer customer = new Customer(customer_ID, customer_Name, address, postal_Code, phone, create_Date,
+                        created_By, last_Update, last_Updated_By, division_ID);
                 allCustomers.add(customer);
             }
         } catch (SQLException e) {
@@ -50,5 +53,14 @@ public abstract class CustomerDAO {
             System.out.println(e.getMessage());
         }
         return allCustomers;
+    }
+
+    public static Customer get(int CustomerId) {
+        for(Customer c : allCustomers) {
+            if(c.getCustomer_ID() == CustomerId) {
+                return c;
+            }
+        }
+        return null;
     }
 }

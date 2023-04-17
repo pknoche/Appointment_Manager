@@ -4,21 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pknoche.scheduling_application.helper.DialogBox;
 import pknoche.scheduling_application.model.Appointment;
-import pknoche.scheduling_application.model.User;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 public abstract class AppointmentDAO {
-    public static void create(Appointment appointment) {
+    private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+
+    public static boolean create(Appointment appointment) {
         try {
-            String sql = "INSERT INTO client_schedule.appointments (Title, Description, Location, Type, Start, " +
-                    "End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, " +
-                    "Contact_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO client_schedule.appointments VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setString(1, appointment.getTitle());
             ps.setString(2, appointment.getDescription());
@@ -35,9 +30,12 @@ public abstract class AppointmentDAO {
             ps.setInt(13, appointment.getContact_ID());
             System.out.println(ps);
             ps.executeUpdate();
+            getAll();
+            return true;
         } catch (SQLException e) {
-            DialogBox.generateErrorMessage("Error creating new appointment");
+            DialogBox.generateErrorMessage("Error creating new appointment.");
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
@@ -62,17 +60,22 @@ public abstract class AppointmentDAO {
                 int Customer_ID = rs.getInt("Customer_ID");
                 int User_ID = rs.getInt("User_ID");
                 int Contact_ID = rs.getInt("Contact_ID");
-                return new Appointment(Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID);
+
+                return new Appointment(Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date,
+                        Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID,
+                        null, null, null); // set these values to null because they are not needed to populate fields in modify appointment form, and doing so allows a less complex SQL query to be executed
         } catch (SQLException e) {
-            DialogBox.generateErrorMessage("Error reading appointment");
+            DialogBox.generateErrorMessage("Error reading appointment. ");
             System.out.println(e.getMessage());
         }
         return null;
     }
 
-    public static void update(Appointment appointment) {
+    public static boolean update(Appointment appointment) {
         try {
-            String sql = "UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+            String sql = "UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type = ?, " +
+                    "Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, " +
+                    "Contact_ID = ? WHERE Appointment_ID = ?";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setString(1, appointment.getTitle());
             ps.setString(2, appointment.getDescription());
@@ -81,16 +84,19 @@ public abstract class AppointmentDAO {
             ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
             ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
             ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
-            ps.setString(11, LoginDAO.getCurrentUser());
-            ps.setInt(12, appointment.getCustomer_ID());
-            ps.setInt(13, appointment.getUser_ID());
-            ps.setInt(14, appointment.getContact_ID());
-            ps.setInt(15, appointment.getAppointment_ID());
+            ps.setString(8, UserDAO.getCurrentUser());
+            ps.setInt(9, appointment.getCustomer_ID());
+            ps.setInt(10, appointment.getUser_ID());
+            ps.setInt(11, appointment.getContact_ID());
+            ps.setInt(12, appointment.getAppointment_ID());
             ps.executeUpdate();
-            DialogBox.generateInformationMessage("Successfully updated appointment.");
+            getAll();
+            return true;
         } catch (SQLException e) {
             DialogBox.generateErrorMessage("Error updating appointment.");
             System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -108,9 +114,13 @@ public abstract class AppointmentDAO {
     }
 
     public static ObservableList<Appointment> getAll() {
-        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT * FROM client_schedule.appointments";
+            allAppointments.clear();
+            String sql = "SELECT appointments.*, customers.Customer_Name, users.User_Name, contacts.Contact_Name " +
+                    "FROM client_schedule.appointments " +
+                    "INNER JOIN client_schedule.customers USING (Customer_ID) " +
+                    "INNER JOIN client_schedule.users USING (User_ID) " +
+                    "INNER JOIN client_schedule.contacts USING (Contact_ID)";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql); //FIXME - try with resources?
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
@@ -128,9 +138,12 @@ public abstract class AppointmentDAO {
                 int Customer_ID = rs.getInt("Customer_ID");
                 int User_ID = rs.getInt("User_ID");
                 int Contact_ID = rs.getInt("Contact_ID");
-                Appointment appointment = new Appointment(Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID);
+                String Customer_Name = rs.getString("Customer_Name");
+                String User_Name = rs.getString("User_Name");
+                String Contact_Name = rs.getString("Contact_Name");
+                Appointment appointment = new Appointment(Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID, Customer_Name, User_Name, Contact_Name);
                 allAppointments.add(appointment);
-        }
+            }
         } catch (SQLException e) {
             DialogBox.generateErrorMessage("Error retrieving appointments from database.");
             System.out.println(e.getMessage());

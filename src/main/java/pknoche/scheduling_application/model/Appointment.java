@@ -4,11 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pknoche.scheduling_application.helper.TimeConversion;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Appointment {
-    private static String[] appointmentTypes = {"Planning Session", "Debriefing", "New Client"};
+    private static final ObservableList<String> appointmentTypes = FXCollections.observableArrayList("New Client",
+            "Planning Session", "Status Update", "De-Briefing");
     private int Appointment_ID;
     private String Title;
     private String Description;
@@ -23,8 +23,14 @@ public class Appointment {
     private int Customer_ID;
     private int User_ID;
     private int Contact_ID;
+    private String Customer_Name;
+    private String User_Name;
+    private String Contact_Name;
 
-    public Appointment(int appointment_ID, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, LocalDateTime create_Date, String created_By, LocalDateTime last_Update, String last_Updated_By, int customer_ID, int user_ID, int contact_ID) {
+    public Appointment(int appointment_ID, String title, String description, String location, String type, LocalDateTime start,
+                       LocalDateTime end, LocalDateTime create_Date, String created_By, LocalDateTime last_Update,
+                       String last_Updated_By, int customer_ID, int user_ID, int contact_ID, String customer_Name,
+                       String user_Name, String contact_Name) {
         Appointment_ID = appointment_ID;
         Title = title;
         Description = description;
@@ -39,6 +45,13 @@ public class Appointment {
         Customer_ID = customer_ID;
         User_ID = user_ID;
         Contact_ID = contact_ID;
+        Customer_Name = customer_Name;
+        User_Name = user_Name;
+        Contact_Name = contact_Name;
+    }
+
+    public static ObservableList<String> getAppointmentTypes() {
+        return FXCollections.observableArrayList(appointmentTypes);
     }
 
     public int getAppointment_ID() {
@@ -149,6 +162,7 @@ public class Appointment {
         return User_ID;
     }
 
+
     public void setUser_ID(int user_ID) {
         User_ID = user_ID;
     }
@@ -160,5 +174,16 @@ public class Appointment {
     public void setContact_ID(int contact_ID) {
         Contact_ID = contact_ID;
     }
-}
 
+    public String getCustomer_IDAndName() {
+        return Customer_ID + " - " + Customer_Name;
+    }
+
+    public String getUser_IDAndName() {
+        return User_ID + " - " + User_Name;
+     }
+
+    public String getContact_IDAndName() {
+        return Contact_ID + " - " + Contact_Name;
+    }
+}
