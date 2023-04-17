@@ -4,27 +4,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a89624a1-f6ac-45d0-b30e-9614bbcafad9" name="Changes" comment="Created additional GUI elements and implemented additional data access methods">
-      <change afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/CountryDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/FirstLevelDivisionDAO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/UserDAO.java" afterDir="false" />
+    <list default="true" id="a89624a1-f6ac-45d0-b30e-9614bbcafad9" name="Changes" comment="Implemented additional data access methods and added some time zone conversion logic">
+      <change afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/ContactDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/AddModifyAppointmentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/AddModifyAppointmentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/AddModifyCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/AddModifyCustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/MainMenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/AppointmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/AppointmentDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/CustomerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/CustomerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/DialogBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/DialogBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/DatabaseConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/FirstLevelDivisionDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/FirstLevelDivisionDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/LoginDAO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/UserDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/GUI_Navigator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/GUI_Navigator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/TimeConversion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/helper/TimeConversion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Appointment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Contact.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Country.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Country.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/FirstLevelDivision.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/FirstLevelDivision.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/AddModifyAppointment.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/AddModifyAppointment.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/AddModifyCustomer.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/AddModifyCustomer.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/LoginMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/LoginMenu.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/MainMenu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI/MainMenu.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +52,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2O6vMGoU0ewWO7pL2xjBhjc29IR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -61,6 +68,7 @@
     &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
     &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.33678162&quot;,
@@ -69,6 +77,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/logs" />
+      <recent name="$PROJECT_DIR$/src/main/resources/logs" />
       <recent name="$PROJECT_DIR$/src/main/resources/pknoche/scheduling_application/GUI" />
     </key>
   </component>
@@ -145,7 +155,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681254230007</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Implemented additional data access methods and added some time zone conversion logic">
+      <created>1681346166683</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1681346166683</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -166,7 +183,8 @@
     <MESSAGE value="Implemented appointments table view" />
     <MESSAGE value="Implemented customers table view" />
     <MESSAGE value="Created additional GUI elements and implemented additional data access methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created additional GUI elements and implemented additional data access methods" />
+    <MESSAGE value="Implemented additional data access methods and added some time zone conversion logic" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented additional data access methods and added some time zone conversion logic" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

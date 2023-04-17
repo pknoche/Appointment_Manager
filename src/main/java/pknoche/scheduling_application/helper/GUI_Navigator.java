@@ -6,6 +6,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pknoche.scheduling_application.controller.AddModifyAppointmentController;
+import pknoche.scheduling_application.model.Appointment;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -30,7 +32,7 @@ public abstract class GUI_Navigator {
      * Gets stage and sets scene for specified menu to be navigated to.
      * @param menuName name of menu to be loaded
      * @param stageName name to set stage to
-     * @param actionEvent button pressed
+     * @param event button pressed
      */
     public static void replaceScene(String menuName, String stageName, ActionEvent event) {
         try {
@@ -50,6 +52,24 @@ public abstract class GUI_Navigator {
             Stage stage = new Stage();
             Parent root = FXMLLoader.load(GUI_Navigator.class.getResource(resourceLocator(menuName)));
             Scene scene = new Scene(root);
+            stage.setTitle(stageName);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void newStage(String menuName, String stageName, Object object) {
+        try {
+            FXMLLoader loader = new FXMLLoader(GUI_Navigator.class.getResource(resourceLocator(menuName)));
+            Stage stage = new Stage();
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            if(menuName.equals("AddModifyAppointment")) {
+                AddModifyAppointmentController controller = loader.getController();
+                controller.modify((Appointment) object);
+            }
             stage.setTitle(stageName);
             stage.setScene(scene);
             stage.show();

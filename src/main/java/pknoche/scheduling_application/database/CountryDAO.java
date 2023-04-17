@@ -9,9 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class CountryDAO {
+    private static final ObservableList<Country> allCountries = FXCollections.observableArrayList()
     public static ObservableList<Country> getAll() {
-        ObservableList<Country> allCountries = FXCollections.observableArrayList();
         try {
+            allCountries.clear();
             String sql = "SELECT Country_ID, Country FROM client_schedule.countries";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();

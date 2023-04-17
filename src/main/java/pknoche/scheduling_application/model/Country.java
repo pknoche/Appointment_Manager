@@ -1,7 +1,5 @@
 package pknoche.scheduling_application.model;
 
-import java.sql.Timestamp;
-
 public class Country {
     private int Country_ID;
     private String Country;

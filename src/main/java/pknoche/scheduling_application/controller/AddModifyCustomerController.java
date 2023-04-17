@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import pknoche.scheduling_application.helper.DialogBox;
 import pknoche.scheduling_application.helper.GUI_Navigator;
+import pknoche.scheduling_application.model.FirstLevelDivision;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +25,8 @@ public class AddModifyCustomerController implements Initializable {
     private TextField phoneField;
     @FXML
     private ComboBox<?> postalCodeCombo;
+    @FXML
+    private ComboBox<?> countryCombo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

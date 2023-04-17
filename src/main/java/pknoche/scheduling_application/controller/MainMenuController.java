@@ -1,7 +1,5 @@
 package pknoche.scheduling_application.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,21 +8,18 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pknoche.scheduling_application.database.AppointmentDAO;
 import pknoche.scheduling_application.database.CustomerDAO;
-import pknoche.scheduling_application.database.LoginDAO;
 import pknoche.scheduling_application.helper.GUI_Navigator;
 import pknoche.scheduling_application.model.Appointment;
 import pknoche.scheduling_application.model.Customer;
 
 import java.net.URL;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
     @FXML
     private TableColumn<Appointment, Integer> appointmentContactCol;
     @FXML
-    private TableColumn<Appointment, Integer> appointmentCustomerIdCol;
+    private TableColumn<Appointment, String> appointmentCustomerCol;
     @FXML
     private TableColumn<Appointment, String> appointmentDescriptionCol;
     @FXML
@@ -40,7 +35,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> appointmentTypeCol;
     @FXML
-    private TableColumn<Appointment, Integer> appointmentUserIdCol;
+    private TableColumn<Appointment, String> appointmentUserCol;
     @FXML
     private TableView<Appointment> appointmentsTable;
     @FXML
@@ -82,12 +77,12 @@ public class MainMenuController implements Initializable {
         appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
         appointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("Description"));
         appointmentLocationCol.setCellValueFactory(new PropertyValueFactory<>("Location"));
-        appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("Contact_ID"));
+        appointmentContactCol.setCellValueFactory(new PropertyValueFactory<>("Contact_IDAndName"));
         appointmentTypeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
         appointmentStartCol.setCellValueFactory(new PropertyValueFactory<>("FormattedStart"));
         appointmentEndCol.setCellValueFactory(new PropertyValueFactory<>("FormattedEnd"));
-        appointmentCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
-        appointmentUserIdCol.setCellValueFactory(new PropertyValueFactory<>("User_ID"));
+        appointmentCustomerCol.setCellValueFactory(new PropertyValueFactory<>("Customer_IDAndName"));
+        appointmentUserCol.setCellValueFactory(new PropertyValueFactory<>("User_IDAndName"));
 
         //populate table view for customers table
         customersTable.setItems(CustomerDAO.getAll());
@@ -102,15 +97,18 @@ public class MainMenuController implements Initializable {
         customerLastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("FormattedLast_Update"));
         customerLastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("Last_Updated_By"));
     }
+
     @FXML
     void onCreateNewAppointmentButtonClick(ActionEvent event) {
         GUI_Navigator.newStage("AddModifyAppointment", "Create Appointment");
-
     }
     @FXML
     void onModifyAppointmentButtonClick(ActionEvent event) {
-        GUI_Navigator.newStage("AddModifyAppointment", "Modify Appointment");
-
+        Appointment appointment = appointmentsTable.getSelectionModel().getSelectedItem();
+        if(appointment == null) {
+            return;
+        }
+        GUI_Navigator.newStage("AddModifyAppointment", "Modify Appointment", appointment);
     }
     @FXML
     void onDeleteAppointmentButtonClick(ActionEvent event) {
