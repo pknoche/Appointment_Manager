@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pknoche.scheduling_application.database.AppointmentDAO;
 import pknoche.scheduling_application.database.CustomerDAO;
+import pknoche.scheduling_application.helper.DialogBox;
 import pknoche.scheduling_application.helper.GUI_Navigator;
 import pknoche.scheduling_application.model.Appointment;
 import pknoche.scheduling_application.model.Customer;
@@ -63,14 +64,6 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*Appointment appointment = new Appointment(999, "test", "test", "test", "test",
-                LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(2),
-                LocalDateTime.now(), LoginDAO.getCurrentUser(), LocalDateTime.now(),
-                LoginDAO.getCurrentUser(), 1, 1, 1);
-        AppointmentDAO.create(appointment);
-        System.out.println(appointment.getFormattedStart());*/
-
-
         // populate table view for appointments table
         appointmentsTable.setItems(AppointmentDAO.getAll());
         appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
@@ -112,7 +105,16 @@ public class MainMenuController implements Initializable {
     }
     @FXML
     void onDeleteAppointmentButtonClick(ActionEvent event) {
-
+        if(appointmentsTable.getSelectionModel().getSelectedItem() == null) {
+            return;
+        } else if(DialogBox.generateConfirmationMessage("Are you sure you would like to delete this appointment? " +
+                "This action cannot be undone.")) {
+                    if(AppointmentDAO.delete(appointmentsTable.getSelectionModel().getSelectedItem())) {
+                        DialogBox.generateInformationMessage("Appointment successfully deleted.");
+                    } else {
+                        DialogBox.generateErrorMessage("Error deleting appointment.");
+                    }
+        }
     }
 
     @FXML
@@ -122,10 +124,29 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void onModifyCustomerButtonClick(ActionEvent event) {
-        GUI_Navigator.newStage("AddModifyCustomer", "Modify Customer");
+        Customer customer = customersTable.getSelectionModel().getSelectedItem();
+        if(customer == null) {
+            return;
+        }
+        GUI_Navigator.newStage("AddModifyCustomer", "Modify Customer", customer);
     }
     @FXML
     void onDeleteCustomerButtonClick(ActionEvent event) {
-
+        if(customersTable.getSelectionModel().getSelectedItem() == null) {
+            return;
+        } else if(DialogBox.generateConfirmationMessage("Are you sure you would like to delete this customer?" +
+                "Any associated appointments will also be deleted. This action cannot be undone.")) {
+            if(AppointmentDAO.delete(customersTable.getSelectionModel().getSelectedItem().getCustomer_ID())) {
+                if(CustomerDAO.delete(customersTable.getSelectionModel().getSelectedItem())) {
+                    DialogBox.generateInformationMessage("Successfully deleted customer and " +
+                            "all associated appointments.");
+                } else {
+                    DialogBox.generateErrorMessage("Successfully deleted customer's associated appointments," +
+                            "but encountered an error when attempting to delete customer.");
+                }
+            } else {
+                DialogBox.generateErrorMessage("Error deleting customer and associated appointments.");
+            }
+        }
     }
 }

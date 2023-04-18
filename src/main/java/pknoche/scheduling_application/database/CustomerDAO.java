@@ -8,23 +8,33 @@ import pknoche.scheduling_application.model.Customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public abstract class CustomerDAO {
     private static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
-    public static void create(Customer customer) {
+    public static boolean create(Customer customer) {
+        try {
+            String sql = "INSERT INTO client_schedule.customers VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+            ps.setString(1, customer.getCustomer_Name());
+            ps.setString(2, customer.getAddress());
+            ps.setString(3, customer.getPostal_Code());
+            ps.setString(4, customer.getPhone());
+            ps.setTimestamp(5, Timestamp.valueOf(customer.getCreate_Date()));
+            ps.setString(6, customer.getCreated_By());
+            ps.setTimestamp(7, Timestamp.valueOf(customer.getLast_Update()));
+            ps.setString(8, customer.getLast_Updated_By());
+            ps.setInt(9, customer.getDivision_ID());
+            ps.executeUpdate();
+            getAll();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
 
-    }
-
-    public static void read(String customerId) {
-
-    }
-
-    public static void update(String customerId) {
-    }
-
-    public static void delete(String customerId) {
     }
 
     public static ObservableList<Customer> getAll() {
@@ -62,5 +72,44 @@ public abstract class CustomerDAO {
             }
         }
         return null;
+    }
+
+    public static boolean update(Customer customer) {
+        try {
+            String sql = "UPDATE client_schedule.customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, " +
+                    "Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? " +
+                    "WHERE Customer_ID = ?";
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+            ps.setString(1, customer.getCustomer_Name());
+            ps.setString(2, customer.getAddress());
+            ps.setString(3, customer.getPostal_Code());
+            ps.setString(4, customer.getPhone());
+            ps.setTimestamp(5, Timestamp.valueOf(customer.getLast_Update()));
+            ps.setString(6, customer.getLast_Updated_By());
+            ps.setInt(7, customer.getDivision_ID());
+            ps.setInt(8, customer.getCustomer_ID());
+            System.out.println(ps);
+            ps.executeUpdate();
+            getAll();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean delete(Customer customer) {
+        try {
+            String sql = "DELETE FROM client_schedule.customers WHERE customer_ID = ?";
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, customer.getCustomer_ID());
+            ps.executeUpdate();
+            getAll();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }

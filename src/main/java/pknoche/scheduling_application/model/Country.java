@@ -16,6 +16,11 @@ public class Country {
     public String getCountry() {
         return Country;
     }
+
+    @Override
+    public String toString() {
+        return Country_ID + " - " + Country;
+    }
 }
 
 

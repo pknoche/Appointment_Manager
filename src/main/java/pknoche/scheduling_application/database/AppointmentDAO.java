@@ -28,88 +28,12 @@ public abstract class AppointmentDAO {
             ps.setInt(11, appointment.getCustomer_ID());
             ps.setInt(12, appointment.getUser_ID());
             ps.setInt(13, appointment.getContact_ID());
-            System.out.println(ps);
             ps.executeUpdate();
             getAll();
             return true;
         } catch (SQLException e) {
-            DialogBox.generateErrorMessage("Error creating new appointment.");
             System.out.println(e.getMessage());
             return false;
-        }
-    }
-
-    public static Appointment read(Appointment appointment) {
-        try {
-            String sql = "SELECT * FROM client_schedule.appointments WHERE Appointment_ID = ?";
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
-            ps.setInt(1, appointment.getAppointment_ID());
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-                int Appointment_ID = rs.getInt("Appointment_ID");
-                String Title = rs.getString("Title");
-                String Description = rs.getString("Description");
-                String Location = rs.getString("Location");
-                String Type = rs.getString("Type");
-                LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
-                LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
-                LocalDateTime Create_Date = rs.getTimestamp("Create_Date").toLocalDateTime();
-                String Created_By = rs.getString("Created_By");
-                LocalDateTime Last_Update = rs.getTimestamp("Last_Update").toLocalDateTime();
-                String Last_Updated_By = rs.getString("Last_Updated_By");
-                int Customer_ID = rs.getInt("Customer_ID");
-                int User_ID = rs.getInt("User_ID");
-                int Contact_ID = rs.getInt("Contact_ID");
-
-                return new Appointment(Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date,
-                        Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID,
-                        null, null, null); // set these values to null because they are not needed to populate fields in modify appointment form, and doing so allows a less complex SQL query to be executed
-        } catch (SQLException e) {
-            DialogBox.generateErrorMessage("Error reading appointment. ");
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
-
-    public static boolean update(Appointment appointment) {
-        try {
-            String sql = "UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type = ?, " +
-                    "Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, " +
-                    "Contact_ID = ? WHERE Appointment_ID = ?";
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
-            ps.setString(1, appointment.getTitle());
-            ps.setString(2, appointment.getDescription());
-            ps.setString(3, appointment.getLocation());
-            ps.setString(4, appointment.getType());
-            ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
-            ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
-            ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
-            ps.setString(8, UserDAO.getCurrentUser());
-            ps.setInt(9, appointment.getCustomer_ID());
-            ps.setInt(10, appointment.getUser_ID());
-            ps.setInt(11, appointment.getContact_ID());
-            ps.setInt(12, appointment.getAppointment_ID());
-            ps.executeUpdate();
-            getAll();
-            return true;
-        } catch (SQLException e) {
-            DialogBox.generateErrorMessage("Error updating appointment.");
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public static void delete(Appointment appointment) {
-        try {
-            String sql = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?";
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
-            ps.setInt(1, appointment.getAppointment_ID());
-            ps.executeUpdate();
-            DialogBox.generateInformationMessage("Successfully deleted appointment.");
-        } catch (SQLException e) {
-            DialogBox.generateErrorMessage("Error deleting appointment.");
-            System.out.println(e.getMessage());
         }
     }
 
@@ -149,5 +73,60 @@ public abstract class AppointmentDAO {
             System.out.println(e.getMessage());
         }
         return allAppointments;
+    }
+
+    public static boolean update(Appointment appointment) {
+        try {
+            String sql = "UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type = ?, " +
+                    "Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, " +
+                    "Contact_ID = ? WHERE Appointment_ID = ?";
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+            ps.setString(1, appointment.getTitle());
+            ps.setString(2, appointment.getDescription());
+            ps.setString(3, appointment.getLocation());
+            ps.setString(4, appointment.getType());
+            ps.setTimestamp(5, Timestamp.valueOf(appointment.getStart()));
+            ps.setTimestamp(6, Timestamp.valueOf(appointment.getEnd()));
+            ps.setTimestamp(7, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setString(8, UserDAO.getCurrentUser());
+            ps.setInt(9, appointment.getCustomer_ID());
+            ps.setInt(10, appointment.getUser_ID());
+            ps.setInt(11, appointment.getContact_ID());
+            ps.setInt(12, appointment.getAppointment_ID());
+            ps.executeUpdate();
+            getAll();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean delete(Appointment appointment) {
+        try {
+            String sql = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?";
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, appointment.getAppointment_ID());
+            ps.executeUpdate();
+            getAll();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean delete(int customerId) {
+        try {
+            String sql = "DELETE FROM client_schedule.appointments WHERE Customer_ID = ?";
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, customerId);
+            ps.executeUpdate();
+            getAll();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }

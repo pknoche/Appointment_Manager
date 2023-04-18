@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class CountryDAO {
-    private static final ObservableList<Country> allCountries = FXCollections.observableArrayList()
+    private static final ObservableList<Country> allCountries = FXCollections.observableArrayList();
     public static ObservableList<Country> getAll() {
         try {
             allCountries.clear();
@@ -26,5 +26,14 @@ public abstract class CountryDAO {
             System.out.println("Error getting list of countries.");
         }
         return allCountries;
+    }
+
+    public static Country get(int countryId) {
+        for (Country c : allCountries) {
+            if (c.getCountry_ID() == countryId) {
+                return c;
+            }
+        }
+        return null;
     }
 }
