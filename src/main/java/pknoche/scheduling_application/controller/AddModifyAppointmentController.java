@@ -76,7 +76,7 @@ public class AddModifyAppointmentController implements Initializable {
 
     @FXML
     void onSaveButtonClick(ActionEvent event) {
-        boolean newAppointment = appointmentIdField.getText().isEmpty(); // determine if appointment is being created or modified based on value of appointmentId field
+        boolean newAppointment = appointmentIdField.getText().isBlank(); // determine if appointment is being created or modified based on value of appointmentId field
         boolean saveSuccess;
         boolean dataInvalid = false;
         int appointmentId;
@@ -100,17 +100,17 @@ public class AddModifyAppointmentController implements Initializable {
 
         // Validate data to ensure no fields are left blank and end time is after start time
         String title = titleField.getText();
-        if(title.isEmpty()) {
+        if(title.isBlank()) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Title field cannot be blank.");
         }
         String description = descriptionField.getText();
-        if(description.isEmpty()) {
+        if(description.isBlank()) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Description field cannot be blank.");
         }
         String location = locationField.getText();
-        if(location.isEmpty()) {
+        if(location.isBlank()) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Location field cannot be blank.");
         }
@@ -165,7 +165,6 @@ public class AddModifyAppointmentController implements Initializable {
             userId = userCombo.getSelectionModel().getSelectedItem().getUser_ID();
         }
 
-
         if(dataInvalid) {
             return;
         }
@@ -182,6 +181,8 @@ public class AddModifyAppointmentController implements Initializable {
         if(saveSuccess) {
             GUI_Navigator.closeStage(event);
             DialogBox.generateInformationMessage("Appointment saved.");
+        } else {
+            DialogBox.generateErrorMessage("Error saving appointment.");
         }
     }
 

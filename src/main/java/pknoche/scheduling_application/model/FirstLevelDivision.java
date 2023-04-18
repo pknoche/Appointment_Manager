@@ -24,4 +24,9 @@ public class FirstLevelDivision {
     public int getCountry_ID() {
         return Country_ID;
     }
+
+    @Override
+    public String toString() {
+        return Division_ID + "  -  " + Division;
+    }
 }

@@ -12,10 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class FirstLevelDivisionDAO {
+    private static final ObservableList<FirstLevelDivision> firstLevelDivisions = FXCollections.observableArrayList();
+
     public static ObservableList<FirstLevelDivision> getByCountry(Country country) {
-        ObservableList<FirstLevelDivision> firstLevelDivisions = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT Division_ID, Division, Country_ID from client_schedule.first_level_divisions " +
+            firstLevelDivisions.clear();
+            String sql = "SELECT Division_ID, Division, Country_ID FROM client_schedule.first_level_divisions " +
                     "WHERE Country_ID = ?";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setInt(1, country.getCountry_ID());
@@ -32,5 +34,28 @@ public abstract class FirstLevelDivisionDAO {
             System.out.println(e.getMessage());
         }
         return firstLevelDivisions;
+    }
+    public static int getCountryId(int divisionId) {
+        try {
+            String sql = "SELECT DISTINCT Country_ID FROM client_schedule.first_level_divisions WHERE Division_ID = ?";
+            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+            ps.setInt(1, divisionId);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return rs.getInt("Country_ID");
+            }
+        } catch (SQLException e) {
+            DialogBox.generateErrorMessage("Error retrieving country.");
+            System.out.println(e.getMessage());
+        }
+        return -1;
+    }
+    public static FirstLevelDivision get(int divisionId) {
+        for(FirstLevelDivision f : firstLevelDivisions) {
+            if(f.getDivision_ID() == divisionId) {
+                return f;
+            }
+        }
+        return null;
     }
 }

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import pknoche.scheduling_application.database.CountryDAO;
 import pknoche.scheduling_application.database.DatabaseConnection;
 
 import java.io.IOException;
@@ -20,11 +21,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         DatabaseConnection.openConnection();
-
-        /*AppointmentDAO appointmentDAO = new AppointmentDAO();
-        ObservableList<Appointment> allAppointments = appointmentDAO.getAll();
-        System.out.println(allAppointments.size());*/
-
         launch();
         DatabaseConnection.closeConnection();
     }
