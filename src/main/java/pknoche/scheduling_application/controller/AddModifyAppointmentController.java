@@ -135,16 +135,16 @@ public class AddModifyAppointmentController implements Initializable {
             DialogBox.generateErrorMessage("Start selection cannot be blank.");
         } else if(dateField.getValue() != null) {
             start = LocalDateTime.of(dateField.getValue(), startTimeCombo.getValue());
-        } else {
-            start = LocalDateTime.of(LocalDate.now(), startTimeCombo.getValue());
+            if(start.isBefore(LocalDateTime.now())) {
+                dataInvalid = true;
+                DialogBox.generateErrorMessage("Appointment start time cannot be in the past.");
+            }
         }
         if(endTimeCombo.getSelectionModel().isEmpty()) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("End selection cannot be blank.");
         } else if (dateField.getValue() != null) {
             end = LocalDateTime.of(dateField.getValue(), endTimeCombo.getValue());
-        } else {
-            end = LocalDateTime.of(LocalDate.now(), endTimeCombo.getValue());
         }
         if(start != null && end != null) {
             if(end.isBefore(start)) {

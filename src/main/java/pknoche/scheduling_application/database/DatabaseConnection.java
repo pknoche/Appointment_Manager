@@ -30,7 +30,7 @@ public abstract class DatabaseConnection {
         } catch (Exception e) {
             System.out.println("There was an error connecting to the database. " +
                     "Please verify that the database server is running and try restarting the program.");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

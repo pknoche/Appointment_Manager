@@ -95,6 +95,7 @@ public class MainMenuController implements Initializable {
     void onCreateNewAppointmentButtonClick(ActionEvent event) {
         GUI_Navigator.newStage("AddModifyAppointment", "Create Appointment");
     }
+
     @FXML
     void onModifyAppointmentButtonClick(ActionEvent event) {
         Appointment appointment = appointmentsTable.getSelectionModel().getSelectedItem();
@@ -103,6 +104,7 @@ public class MainMenuController implements Initializable {
         }
         GUI_Navigator.newStage("AddModifyAppointment", "Modify Appointment", appointment);
     }
+
     @FXML
     void onDeleteAppointmentButtonClick(ActionEvent event) {
         if(appointmentsTable.getSelectionModel().getSelectedItem() == null) {
@@ -130,6 +132,7 @@ public class MainMenuController implements Initializable {
         }
         GUI_Navigator.newStage("AddModifyCustomer", "Modify Customer", customer);
     }
+
     @FXML
     void onDeleteCustomerButtonClick(ActionEvent event) {
         if(customersTable.getSelectionModel().getSelectedItem() == null) {
