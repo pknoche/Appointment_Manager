@@ -28,7 +28,7 @@ public abstract class CustomerDAO {
             ps.setString(8, customer.getLast_Updated_By());
             ps.setInt(9, customer.getDivision_ID());
             ps.executeUpdate();
-            getAll();
+            refresh();
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -38,31 +38,38 @@ public abstract class CustomerDAO {
     }
 
     public static ObservableList<Customer> getAll() {
-        try {
-            allCustomers.clear();
-            String sql = "SELECT * FROM client_schedule.customers";
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                int customer_ID = rs.getInt("Customer_ID");
-                String customer_Name = rs.getString("Customer_Name");
-                String address = rs.getString("Address");
-                String postal_Code = rs.getString("Postal_Code");
-                String phone = rs.getString("Phone");
-                LocalDateTime create_Date = rs.getTimestamp("Create_Date").toLocalDateTime();
-                String created_By = rs.getString("Created_By");
-                LocalDateTime last_Update = rs.getTimestamp("Last_Update").toLocalDateTime();
-                String last_Updated_By = rs.getString("Last_Updated_By");
-                int division_ID = rs.getInt("Division_ID");
-                Customer customer = new Customer(customer_ID, customer_Name, address, postal_Code, phone, create_Date,
-                        created_By, last_Update, last_Updated_By, division_ID);
-                allCustomers.add(customer);
+        if(allCustomers.isEmpty()) {
+            try {
+                allCustomers.clear();
+                String sql = "SELECT * FROM client_schedule.customers";
+                PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int customer_ID = rs.getInt("Customer_ID");
+                    String customer_Name = rs.getString("Customer_Name");
+                    String address = rs.getString("Address");
+                    String postal_Code = rs.getString("Postal_Code");
+                    String phone = rs.getString("Phone");
+                    LocalDateTime create_Date = rs.getTimestamp("Create_Date").toLocalDateTime();
+                    String created_By = rs.getString("Created_By");
+                    LocalDateTime last_Update = rs.getTimestamp("Last_Update").toLocalDateTime();
+                    String last_Updated_By = rs.getString("Last_Updated_By");
+                    int division_ID = rs.getInt("Division_ID");
+                    Customer customer = new Customer(customer_ID, customer_Name, address, postal_Code, phone, create_Date,
+                            created_By, last_Update, last_Updated_By, division_ID);
+                    allCustomers.add(customer);
+                }
+            } catch (SQLException e) {
+                DialogBox.generateErrorMessage("Error retrieving customers from database.");
+                System.out.println(e.getMessage());
             }
-        } catch (SQLException e) {
-            DialogBox.generateErrorMessage("Error retrieving customers from database.");
-            System.out.println(e.getMessage());
         }
         return allCustomers;
+    }
+
+    public static void refresh() {
+        allCustomers.clear();
+        getAll();
     }
 
     public static Customer get(int CustomerId) {
@@ -90,7 +97,7 @@ public abstract class CustomerDAO {
             ps.setInt(8, customer.getCustomer_ID());
             System.out.println(ps);
             ps.executeUpdate();
-            getAll();
+            refresh();
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -104,7 +111,7 @@ public abstract class CustomerDAO {
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setInt(1, customer.getCustomer_ID());
             ps.executeUpdate();
-            getAll();
+            refresh();
             return true;
 
         } catch (SQLException e) {

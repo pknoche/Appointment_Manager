@@ -2,7 +2,6 @@ package pknoche.scheduling_application.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -18,13 +17,10 @@ import pknoche.scheduling_application.model.Contact;
 import pknoche.scheduling_application.model.Customer;
 import pknoche.scheduling_application.model.User;
 
-import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ResourceBundle;
 
-public class AddModifyAppointmentController implements Initializable {
+public class AddModifyAppointmentController {
 
     @FXML
     private TextField appointmentIdField;
@@ -49,8 +45,8 @@ public class AddModifyAppointmentController implements Initializable {
     @FXML
     private ComboBox<User> userCombo;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    private void initialize() {
         contactCombo.setItems(ContactDAO.getAll());
         customerCombo.setItems(CustomerDAO.getAll());
         typeCombo.setItems(Appointment.getAppointmentTypes());
@@ -68,14 +64,14 @@ public class AddModifyAppointmentController implements Initializable {
     }
 
     @FXML
-    void onCancelButtonClick(ActionEvent event) {
+    private void onCancelButtonClick(ActionEvent event) {
         if(DialogBox.generateConfirmationMessage("Are you sure you would like to cancel? The information entered will be discarded.")) { // if OK is clicked, then close window
             GUI_Navigator.closeStage(event);
         }
     }
 
     @FXML
-    void onSaveButtonClick(ActionEvent event) {
+    private void onSaveButtonClick(ActionEvent event) {
         boolean newAppointment = appointmentIdField.getText().isBlank(); // determine if appointment is being created or modified based on value of appointmentId field
         boolean saveSuccess;
         boolean dataInvalid = false;
@@ -169,10 +165,17 @@ public class AddModifyAppointmentController implements Initializable {
             return;
         }
 
-        // If data passed validation checks, create new Appointment object and send to database.
+        // If data passed validation checks, create new Appointment object, check for overlap, and send to database if no overlap.
         Appointment appointment = new Appointment(appointmentId, title, description, location, type, start, end,
                 LocalDateTime.now(), UserDAO.getCurrentUser(), LocalDateTime.now(), UserDAO.getCurrentUser(),
                 customerId, userId, contactId, null, null, null); // null arguments not needed for database insertion
+
+        if(AppointmentDAO.appointmentOverlaps(appointment)) {
+            DialogBox.generateErrorMessage("Appointment overlaps with an existing appointment " +
+                    "already scheduled with the selected customer.");
+            return;
+        }
+
         if(newAppointment) {
             saveSuccess = AppointmentDAO.create(appointment);
         } else {

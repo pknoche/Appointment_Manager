@@ -16,7 +16,7 @@ import pknoche.scheduling_application.model.Customer;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainMenuController implements Initializable {
+public class MainMenuController {
     @FXML
     private TableColumn<Appointment, Integer> appointmentContactCol;
     @FXML
@@ -62,8 +62,8 @@ public class MainMenuController implements Initializable {
     @FXML
     private TableColumn<Customer, String> customerPostalCodeCol;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    private void initialize() {
         // populate table view for appointments table
         appointmentsTable.setItems(AppointmentDAO.getAll());
         appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
@@ -89,15 +89,17 @@ public class MainMenuController implements Initializable {
         customerCreatedByCol.setCellValueFactory(new PropertyValueFactory<>("Created_By"));
         customerLastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("FormattedLast_Update"));
         customerLastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("Last_Updated_By"));
+
+        System.out.println(appointmentsTable.getSortOrder());
     }
 
     @FXML
-    void onCreateNewAppointmentButtonClick(ActionEvent event) {
+    private void onCreateNewAppointmentButtonClick(ActionEvent event) {
         GUI_Navigator.newStage("AddModifyAppointment", "Create Appointment");
     }
 
     @FXML
-    void onModifyAppointmentButtonClick(ActionEvent event) {
+    private void onModifyAppointmentButtonClick(ActionEvent event) {
         Appointment appointment = appointmentsTable.getSelectionModel().getSelectedItem();
         if(appointment == null) {
             return;
@@ -106,26 +108,29 @@ public class MainMenuController implements Initializable {
     }
 
     @FXML
-    void onDeleteAppointmentButtonClick(ActionEvent event) {
+    private void onDeleteAppointmentButtonClick(ActionEvent event) {
         if(appointmentsTable.getSelectionModel().getSelectedItem() == null) {
             return;
         } else if(DialogBox.generateConfirmationMessage("Are you sure you would like to delete this appointment? " +
                 "This action cannot be undone.")) {
-                    if(AppointmentDAO.delete(appointmentsTable.getSelectionModel().getSelectedItem())) {
-                        DialogBox.generateInformationMessage("Appointment successfully deleted.");
-                    } else {
+            int appointmentId = appointmentsTable.getSelectionModel().getSelectedItem().getAppointment_ID();
+            String appointmentType = appointmentsTable.getSelectionModel().getSelectedItem().getType();
+            if(AppointmentDAO.delete(appointmentsTable.getSelectionModel().getSelectedItem())) {
+                        DialogBox.generateInformationMessage(appointmentType + " appointment (Appointment ID #" +
+                                appointmentId + ") deleted.");
+            } else {
                         DialogBox.generateErrorMessage("Error deleting appointment.");
-                    }
+            }
         }
     }
 
     @FXML
-    void onCreateNewCustomerButtonClick(ActionEvent event) {
+    private void onCreateNewCustomerButtonClick(ActionEvent event) {
         GUI_Navigator.newStage("AddModifyCustomer", "Create Customer");
     }
 
     @FXML
-    void onModifyCustomerButtonClick(ActionEvent event) {
+    private void onModifyCustomerButtonClick(ActionEvent event) {
         Customer customer = customersTable.getSelectionModel().getSelectedItem();
         if(customer == null) {
             return;
@@ -134,7 +139,7 @@ public class MainMenuController implements Initializable {
     }
 
     @FXML
-    void onDeleteCustomerButtonClick(ActionEvent event) {
+    private void onDeleteCustomerButtonClick(ActionEvent event) {
         if(customersTable.getSelectionModel().getSelectedItem() == null) {
             return;
         } else if(DialogBox.generateConfirmationMessage("Are you sure you would like to delete this customer?" +

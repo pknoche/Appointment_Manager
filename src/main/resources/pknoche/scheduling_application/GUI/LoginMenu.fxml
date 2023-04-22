@@ -24,18 +24,18 @@
             <children>
                 <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="205.0" text="test" GridPane.columnIndex="1" />
                 <PasswordField fx:id="passwordField" text="test" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="112.0" text="Username">
+                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="112.0" text="%usernameLabel">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font>
                 </Label>
-                <Label fx:id="passwordLabel" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="112.0" text="Password" GridPane.rowIndex="1">
+                <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="112.0" text="%passwordLabel" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
             </children>
         </GridPane>
-        <Button fx:id="loginButton" layoutX="248.0" layoutY="221.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="105.0" text="Login" AnchorPane.leftAnchor="248.0" AnchorPane.rightAnchor="247.0" />
-      <Label fx:id="localeLabel" alignment="CENTER" layoutX="151.0" layoutY="291.0" prefHeight="17.0" prefWidth="298.0" text="Locale: " visible="false" />
+        <Button layoutX="248.0" layoutY="221.0" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="25.0" prefWidth="105.0" text="%loginButton" AnchorPane.leftAnchor="248.0" AnchorPane.rightAnchor="247.0" />
+      <Label fx:id="localeLabel" alignment="CENTER" layoutX="151.0" layoutY="291.0" prefHeight="17.0" prefWidth="298.0" text="%localeLabel" />
     </children>
 </AnchorPane>
