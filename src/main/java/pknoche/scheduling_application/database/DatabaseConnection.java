@@ -1,9 +1,11 @@
 package pknoche.scheduling_application.database;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
+import pknoche.scheduling_application.helper.DialogBox;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public abstract class DatabaseConnection {
     private static final String protocol = "jdbc";
@@ -27,7 +29,7 @@ public abstract class DatabaseConnection {
             dataSource.setPassword(password);
             connection = dataSource.getConnection();
             System.out.println("Connection opened - " + getConnection());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("There was an error connecting to the database. " +
                     "Please verify that the database server is running and try restarting the program.");
             System.out.println(e.getMessage());

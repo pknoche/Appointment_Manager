@@ -1,0 +1,3 @@
+# include folder, but ignore log files
+*
+!.gitignore

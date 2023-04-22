@@ -21,7 +21,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-public class AddModifyCustomerController implements Initializable {
+public class AddModifyCustomerController {
     @FXML
     private TextField addressField;
     @FXML
@@ -37,13 +37,13 @@ public class AddModifyCustomerController implements Initializable {
     @FXML
     private ComboBox<Country> countryCombo;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    private void initialize() {
         countryCombo.setItems(CountryDAO.getAll());
     }
 
     @FXML
-    void onCountrySelection(ActionEvent event) {
+    private void onCountrySelection(ActionEvent event) {
         if(countryCombo.getSelectionModel().isEmpty()) { // to prevent ActionEvent created by setItems in countryCombo list during initialize from trying to set divisionIdCombo with null value
             return;
         }
@@ -53,7 +53,7 @@ public class AddModifyCustomerController implements Initializable {
     }
 
     @FXML
-    void onCancelButtonClick(ActionEvent event) {
+    private void onCancelButtonClick(ActionEvent event) {
         if(DialogBox.generateConfirmationMessage("Are you sure you would like to cancel? " +
                 "The information entered will be discarded.")) { // if OK is clicked, then close window
             GUI_Navigator.closeStage(event);
@@ -61,7 +61,7 @@ public class AddModifyCustomerController implements Initializable {
     }
 
     @FXML
-    void onSaveButtonClick(ActionEvent event) {
+    private void onSaveButtonClick(ActionEvent event) {
         boolean newCustomer = customerIdField.getText().isEmpty(); // determine if appointment is being created or modified based on value of appointmentId field
         boolean saveSuccess;
         boolean dataInvalid = false;
@@ -131,7 +131,7 @@ public class AddModifyCustomerController implements Initializable {
         }
     }
 
-    public void modify(Customer customer) {
+     public void modify(Customer customer) {
         customerIdField.setText(String.valueOf(customer.getCustomer_ID()));
         customerNameField.setText(customer.getCustomer_Name());
         addressField.setText(customer.getAddress());

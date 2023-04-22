@@ -29,7 +29,7 @@ public abstract class AppointmentDAO {
             ps.setInt(12, appointment.getUser_ID());
             ps.setInt(13, appointment.getContact_ID());
             ps.executeUpdate();
-            getAll();
+            refresh();
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -38,41 +38,48 @@ public abstract class AppointmentDAO {
     }
 
     public static ObservableList<Appointment> getAll() {
-        try {
-            allAppointments.clear();
-            String sql = "SELECT appointments.*, customers.Customer_Name, users.User_Name, contacts.Contact_Name " +
-                    "FROM client_schedule.appointments " +
-                    "INNER JOIN client_schedule.customers USING (Customer_ID) " +
-                    "INNER JOIN client_schedule.users USING (User_ID) " +
-                    "INNER JOIN client_schedule.contacts USING (Contact_ID)";
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql); //FIXME - try with resources?
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                int Appointment_ID = rs.getInt("Appointment_ID");
-                String Title = rs.getString("Title");
-                String Description = rs.getString("Description");
-                String Location = rs.getString("Location");
-                String Type = rs.getString("Type");
-                LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
-                LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
-                LocalDateTime Create_Date = rs.getTimestamp("Create_Date").toLocalDateTime();
-                String Created_By = rs.getString("Created_By");
-                LocalDateTime Last_Update = rs.getTimestamp("Last_Update").toLocalDateTime();
-                String Last_Updated_By = rs.getString("Last_Updated_By");
-                int Customer_ID = rs.getInt("Customer_ID");
-                int User_ID = rs.getInt("User_ID");
-                int Contact_ID = rs.getInt("Contact_ID");
-                String Customer_Name = rs.getString("Customer_Name");
-                String User_Name = rs.getString("User_Name");
-                String Contact_Name = rs.getString("Contact_Name");
-                Appointment appointment = new Appointment(Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID, Customer_Name, User_Name, Contact_Name);
-                allAppointments.add(appointment);
+        if(allAppointments.isEmpty()) {
+            try {
+                allAppointments.clear();
+                String sql = "SELECT appointments.*, customers.Customer_Name, users.User_Name, contacts.Contact_Name " +
+                        "FROM client_schedule.appointments " +
+                        "INNER JOIN client_schedule.customers USING (Customer_ID) " +
+                        "INNER JOIN client_schedule.users USING (User_ID) " +
+                        "INNER JOIN client_schedule.contacts USING (Contact_ID)";
+                PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql); //FIXME - try with resources?
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int Appointment_ID = rs.getInt("Appointment_ID");
+                    String Title = rs.getString("Title");
+                    String Description = rs.getString("Description");
+                    String Location = rs.getString("Location");
+                    String Type = rs.getString("Type");
+                    LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
+                    LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
+                    LocalDateTime Create_Date = rs.getTimestamp("Create_Date").toLocalDateTime();
+                    String Created_By = rs.getString("Created_By");
+                    LocalDateTime Last_Update = rs.getTimestamp("Last_Update").toLocalDateTime();
+                    String Last_Updated_By = rs.getString("Last_Updated_By");
+                    int Customer_ID = rs.getInt("Customer_ID");
+                    int User_ID = rs.getInt("User_ID");
+                    int Contact_ID = rs.getInt("Contact_ID");
+                    String Customer_Name = rs.getString("Customer_Name");
+                    String User_Name = rs.getString("User_Name");
+                    String Contact_Name = rs.getString("Contact_Name");
+                    Appointment appointment = new Appointment(Appointment_ID, Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID, Customer_Name, User_Name, Contact_Name);
+                    allAppointments.add(appointment);
+                }
+            } catch (SQLException e) {
+                DialogBox.generateErrorMessage("Error retrieving appointments from database.");
+                System.out.println(e.getMessage());
             }
-        } catch (SQLException e) {
-            DialogBox.generateErrorMessage("Error retrieving appointments from database.");
-            System.out.println(e.getMessage());
         }
         return allAppointments;
+    }
+
+    public static void refresh() {
+        allAppointments.clear();
+        getAll();
     }
 
     public static boolean update(Appointment appointment) {
@@ -94,7 +101,7 @@ public abstract class AppointmentDAO {
             ps.setInt(11, appointment.getContact_ID());
             ps.setInt(12, appointment.getAppointment_ID());
             ps.executeUpdate();
-            getAll();
+            refresh();
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -108,7 +115,7 @@ public abstract class AppointmentDAO {
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setInt(1, appointment.getAppointment_ID());
             ps.executeUpdate();
-            getAll();
+            refresh();
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -122,11 +129,32 @@ public abstract class AppointmentDAO {
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setInt(1, customerId);
             ps.executeUpdate();
-            getAll();
+            refresh();
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    public static boolean appointmentOverlaps(Appointment newAppointment) {
+        for(Appointment a : allAppointments) {
+            if((newAppointment.getCustomer_ID() == a.getCustomer_ID()) &&
+                    (newAppointment.getAppointment_ID() != a.getAppointment_ID())) {
+                if ((newAppointment.getStart().isAfter(a.getStart()) || newAppointment.getStart().isEqual(a.getStart()))
+                        && (newAppointment.getStart().isBefore(a.getEnd()))) {
+                    return true;
+                }
+                if ((newAppointment.getEnd().isAfter(a.getStart())) &&
+                        (newAppointment.getEnd().isBefore(a.getEnd()) || newAppointment.getEnd().isEqual(a.getEnd()))) {
+                    return true;
+                }
+                if ((newAppointment.getStart().isBefore(a.getStart()) || newAppointment.getStart().isEqual(a.getStart()))
+                        && (newAppointment.getEnd().isAfter(a.getEnd()) || newAppointment.getEnd().isEqual(a.getEnd()))) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

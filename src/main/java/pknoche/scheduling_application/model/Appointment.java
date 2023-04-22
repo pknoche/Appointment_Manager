@@ -162,7 +162,6 @@ public class Appointment {
         return User_ID;
     }
 
-
     public void setUser_ID(int user_ID) {
         User_ID = user_ID;
     }
