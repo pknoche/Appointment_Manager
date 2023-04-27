@@ -1,17 +1,13 @@
 package pknoche.scheduling_application.helper;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import pknoche.scheduling_application.controller.AddModifyAppointmentController;
 import pknoche.scheduling_application.controller.AddModifyCustomerController;
-import pknoche.scheduling_application.controller.MainMenuController;
-import pknoche.scheduling_application.database.AppointmentDAO;
 import pknoche.scheduling_application.model.Appointment;
 import pknoche.scheduling_application.model.Customer;
 
@@ -19,7 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class GUI_Navigator {
+public class GUI_Navigator {
     /**
      * Associates menu name with resource path of FXML document pertaining to menu.
      * @param menuName menu name to be located

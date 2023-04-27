@@ -1,9 +1,7 @@
 package pknoche.scheduling_application.controller;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import pknoche.scheduling_application.database.CountryDAO;
@@ -15,11 +13,8 @@ import pknoche.scheduling_application.helper.GUI_Navigator;
 import pknoche.scheduling_application.model.Country;
 import pknoche.scheduling_application.model.Customer;
 import pknoche.scheduling_application.model.FirstLevelDivision;
-import pknoche.scheduling_application.model.User;
 
-import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ResourceBundle;
 
 public class AddModifyCustomerController {
     @FXML
@@ -44,10 +39,10 @@ public class AddModifyCustomerController {
 
     @FXML
     private void onCountrySelection(ActionEvent event) {
-        if(countryCombo.getSelectionModel().isEmpty()) { // to prevent ActionEvent created by setItems in countryCombo list during initialize from trying to set divisionIdCombo with null value
+        if(countryCombo.getValue() == null) { // to prevent ActionEvent created by setItems in countryCombo list during initialize from trying to set divisionIdCombo with null value
             return;
         }
-        divisionIdCombo.setItems(FirstLevelDivisionDAO.getByCountry(countryCombo.getSelectionModel().getSelectedItem()));
+        divisionIdCombo.setItems(FirstLevelDivisionDAO.getByCountry(countryCombo.getValue()));
         divisionIdCombo.setPromptText("");
         divisionIdCombo.setDisable(false);
     }
@@ -90,7 +85,7 @@ public class AddModifyCustomerController {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Address field cannot be blank.");
         }
-        if(countryCombo.getSelectionModel().isEmpty()) {
+        if(countryCombo.getValue() == null) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Country selection cannot be blank.");
         }
@@ -99,11 +94,11 @@ public class AddModifyCustomerController {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Postal Code field cannot be blank.");
         }
-        if(divisionIdCombo.getSelectionModel().isEmpty()) {
+        if(divisionIdCombo.getValue() == null) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Division ID field cannot be blank.");
         } else {
-            divisionId = divisionIdCombo.getSelectionModel().getSelectedItem().getDivision_ID();
+            divisionId = divisionIdCombo.getValue().getDivision_ID();
         }
         String phone = phoneField.getText();
         if(phone.isBlank()) {
@@ -135,11 +130,11 @@ public class AddModifyCustomerController {
         customerIdField.setText(String.valueOf(customer.getCustomer_ID()));
         customerNameField.setText(customer.getCustomer_Name());
         addressField.setText(customer.getAddress());
-        countryCombo.getSelectionModel().select(CountryDAO.get(FirstLevelDivisionDAO
+        countryCombo.setValue(CountryDAO.get(FirstLevelDivisionDAO
                 .getCountryId(customer.getDivision_ID())));
         onCountrySelection(new ActionEvent());
         postalCodeField.setText(customer.getPostal_Code());
-        divisionIdCombo.getSelectionModel().select(FirstLevelDivisionDAO.get(customer.getDivision_ID()));
+        divisionIdCombo.setValue(FirstLevelDivisionDAO.get(customer.getDivision_ID()));
         phoneField.setText(customer.getPhone());
     }
 }

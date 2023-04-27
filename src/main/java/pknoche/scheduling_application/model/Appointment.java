@@ -5,27 +5,28 @@ import javafx.collections.ObservableList;
 import pknoche.scheduling_application.helper.TimeConversion;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
-public class Appointment {
+public class Appointment implements Comparable<Appointment> {
     private static final ObservableList<String> appointmentTypes = FXCollections.observableArrayList("New Client",
             "Planning Session", "Status Update", "De-Briefing");
-    private int Appointment_ID;
-    private String Title;
-    private String Description;
-    private String Location;
-    private String Type;
-    private LocalDateTime Start;
-    private LocalDateTime End;
-    private LocalDateTime Create_Date;
-    private String Created_By;
-    private LocalDateTime Last_Update;
-    private String Last_Updated_By;
-    private int Customer_ID;
-    private int User_ID;
-    private int Contact_ID;
-    private String Customer_Name;
-    private String User_Name;
-    private String Contact_Name;
+    private final int Appointment_ID;
+    private final String Title;
+    private final String Description;
+    private final String Location;
+    private final String Type;
+    private final LocalDateTime Start;
+    private final LocalDateTime End;
+    private final LocalDateTime Create_Date;
+    private final String Created_By;
+    private final LocalDateTime Last_Update;
+    private final String Last_Updated_By;
+    private final int Customer_ID;
+    private final int User_ID;
+    private final int Contact_ID;
+    private final String Customer_Name;
+    private final String User_Name;
+    private final String Contact_Name;
 
     public Appointment(int appointment_ID, String title, String description, String location, String type, LocalDateTime start,
                        LocalDateTime end, LocalDateTime create_Date, String created_By, LocalDateTime last_Update,
@@ -58,40 +59,20 @@ public class Appointment {
         return Appointment_ID;
     }
 
-    public void setAppointment_ID(int appointment_ID) {
-        Appointment_ID = appointment_ID;
-    }
-
     public String getTitle() {
         return Title;
-    }
-
-    public void setTitle(String title) {
-        Title = title;
     }
 
     public String getDescription() {
         return Description;
     }
 
-    public void setDescription(String description) {
-        Description = description;
-    }
-
     public String getLocation() {
         return Location;
     }
 
-    public void setLocation(String location) {
-        Location = location;
-    }
-
     public String getType() {
         return Type;
-    }
-
-    public void setType(String type) {
-        Type = type;
     }
 
     public LocalDateTime getStart() {
@@ -102,10 +83,6 @@ public class Appointment {
         return TimeConversion.toFormattedString(getStart());
     }
 
-    public void setStart(LocalDateTime start) {
-        Start = start;
-    }
-
     public LocalDateTime getEnd() {
         return End;
     }
@@ -114,64 +91,32 @@ public class Appointment {
         return TimeConversion.toFormattedString(getEnd());
     }
 
-    public void setEnd(LocalDateTime end) {
-        End = end;
-    }
-
     public LocalDateTime getCreate_Date() {
         return Create_Date;
-    }
-
-    public void setCreate_Date(LocalDateTime create_Date) {
-        Create_Date = create_Date;
     }
 
     public String getCreated_By() {
         return Created_By;
     }
 
-    public void setCreated_By(String created_By) {
-        Created_By = created_By;
-    }
-
     public LocalDateTime getLast_Update() {
         return Last_Update;
-    }
-
-    public void setLast_Update(LocalDateTime last_Update) {
-        Last_Update = last_Update;
     }
 
     public String getLast_Updated_By() {
         return Last_Updated_By;
     }
 
-    public void setLast_Updated_By(String last_Updated_By) {
-        Last_Updated_By = last_Updated_By;
-    }
-
     public int getCustomer_ID() {
         return Customer_ID;
-    }
-
-    public void setCustomer_ID(int customer_ID) {
-        Customer_ID = customer_ID;
     }
 
     public int getUser_ID() {
         return User_ID;
     }
 
-    public void setUser_ID(int user_ID) {
-        User_ID = user_ID;
-    }
-
     public int getContact_ID() {
         return Contact_ID;
-    }
-
-    public void setContact_ID(int contact_ID) {
-        Contact_ID = contact_ID;
     }
 
     public String getCustomer_IDAndName() {
@@ -184,5 +129,13 @@ public class Appointment {
 
     public String getContact_IDAndName() {
         return Contact_ID + " - " + Contact_Name;
+    }
+
+    @Override
+    public int compareTo(Appointment compareAppointment) {
+        LocalDateTime now = LocalDateTime.now();
+        long timeUntilCompare = ChronoUnit.MINUTES.between(now, compareAppointment.getStart());
+        long timeUntilThis = ChronoUnit.MINUTES.between(now, this.getStart());
+        return (int) (timeUntilThis - timeUntilCompare);
     }
 }

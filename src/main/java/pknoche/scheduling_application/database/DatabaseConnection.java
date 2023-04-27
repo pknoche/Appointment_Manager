@@ -1,13 +1,11 @@
 package pknoche.scheduling_application.database;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
-import pknoche.scheduling_application.helper.DialogBox;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public abstract class DatabaseConnection {
+public class DatabaseConnection {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
     private static final String server = "//localhost/";
@@ -19,8 +17,6 @@ public abstract class DatabaseConnection {
     public static Connection connection = null;
 
     public static void openConnection() {
-
-
         try {
             MysqlDataSource dataSource = new MysqlDataSource();
             dataSource.setUrl(URL);
@@ -28,7 +24,7 @@ public abstract class DatabaseConnection {
             dataSource.setUser(username);
             dataSource.setPassword(password);
             connection = dataSource.getConnection();
-            System.out.println("Connection opened - " + getConnection());
+            System.out.println("Database connection opened - " + getConnection());
         } catch (SQLException e) {
             System.out.println("There was an error connecting to the database. " +
                     "Please verify that the database server is running and try restarting the program.");
@@ -43,11 +39,9 @@ public abstract class DatabaseConnection {
     public static void closeConnection() {
         try{
             connection.close();
-            System.out.println("Connection closed");
-        } catch (Exception e) {
-            // catch exception and ignore because closeConnection() is only called upon closing program
+            System.out.println("Database connection closed");
+        } catch (SQLException ignored) {
+            // ignored because closeConnection() is only called upon closing program
         }
-
     }
-
 }

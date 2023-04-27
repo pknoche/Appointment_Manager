@@ -11,7 +11,10 @@ import pknoche.scheduling_application.helper.DialogBox;
 import pknoche.scheduling_application.helper.GUI_Navigator;
 import pknoche.scheduling_application.helper.TimeConversion;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;

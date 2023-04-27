@@ -5,7 +5,7 @@ import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
-public abstract class DialogBox {
+public class DialogBox {
 
     public static void generateErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

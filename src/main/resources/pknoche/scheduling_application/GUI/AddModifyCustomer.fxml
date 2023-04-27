@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pknoche.scheduling_application.controller.AddModifyCustomerController">
     <children>
         <ButtonBar layoutX="386.0" layoutY="746.0" prefHeight="40.0" prefWidth="200.0">

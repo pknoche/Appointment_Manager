@@ -8,14 +8,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class UserDAO {
+public class UserDAO {
     private static String currentUser;
     private static final ObservableList<User> allUsers = FXCollections.observableArrayList();
 
     public static ObservableList<User> getAllUsers() {
         try {
             allUsers.clear();
-            String sql = "SELECT User_ID, User_Name FROM client_schedule.users";
+            String sql = "SELECT User_ID, User_Name FROM client_schedule.users;";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -32,7 +32,7 @@ public abstract class UserDAO {
 
     public static boolean loginIsValid(String username, String password) {
         try {
-            String sql = "SELECT User_Name, Password FROM client_schedule.users WHERE User_Name = ? AND Password = ?";
+            String sql = "SELECT User_Name, Password FROM client_schedule.users WHERE User_Name = ? AND Password = ?;";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setString(1, username);
             ps.setString(2, password);

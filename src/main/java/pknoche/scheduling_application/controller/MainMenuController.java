@@ -1,20 +1,28 @@
 package pknoche.scheduling_application.controller;
 
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import pknoche.scheduling_application.database.AppointmentDAO;
+import pknoche.scheduling_application.database.ContactDAO;
 import pknoche.scheduling_application.database.CustomerDAO;
+import pknoche.scheduling_application.database.reports.AppointmentsByMonthDAO;
+import pknoche.scheduling_application.database.reports.CustomersByDivisionDAO;
 import pknoche.scheduling_application.helper.DialogBox;
 import pknoche.scheduling_application.helper.GUI_Navigator;
+import pknoche.scheduling_application.helper.TimeConversion;
+import pknoche.scheduling_application.helper.reports.AppointmentsByMonth;
+import pknoche.scheduling_application.helper.reports.ContactSchedule;
+import pknoche.scheduling_application.helper.reports.CustomersByDivision;
 import pknoche.scheduling_application.model.Appointment;
+import pknoche.scheduling_application.model.Contact;
 import pknoche.scheduling_application.model.Customer;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.time.LocalDateTime;
 
 public class MainMenuController {
     @FXML
@@ -61,6 +69,44 @@ public class MainMenuController {
     private TableColumn<Customer, String> customerPhoneCol;
     @FXML
     private TableColumn<Customer, String> customerPostalCodeCol;
+    @FXML
+    private TableView<AppointmentsByMonth> appointmentsByMonthTable;
+    @FXML
+    private TableView<Appointment> contactScheduleTable;
+    @FXML
+    private ComboBox<Contact> reportsContactsCombo;
+    @FXML
+    private TableView<CustomersByDivision> customersByDivisionTable;
+    @FXML
+    private TableColumn<Appointment, String> scheduleReportCustomerCol;
+    @FXML
+    private TableColumn<Appointment, String> scheduleReportDescriptionCol;
+    @FXML
+    private TableColumn<Appointment, String> scheduleReportEndCol;
+    @FXML
+    private TableColumn<Appointment, Integer> scheduleReportIdCol;
+    @FXML
+    private TableColumn<Appointment, String> scheduleReportStartCol;
+    @FXML
+    private TableColumn<Appointment, String> scheduleReportTitleCol;
+    @FXML
+    private TableColumn<Appointment, String> scheduleReportTypeCol;
+    @FXML
+    private TableColumn<CustomersByDivision, Integer> divisionReportCustomerCol;
+    @FXML
+    private TableColumn<CustomersByDivision, String> divisionReportDivisionCol;
+    @FXML
+    private ComboBox<String> reportsYearCombo;
+    @FXML
+    private TableColumn<AppointmentsByMonth, Integer> appointmentsReportDebriefingCol;
+    @FXML
+    private TableColumn<AppointmentsByMonth, String> appointmentsReportMonthCol;
+    @FXML
+    private TableColumn<AppointmentsByMonth, Integer> appointmentsReportNewClientCol;
+    @FXML
+    private TableColumn<AppointmentsByMonth, Integer> appointmentsReportPlanningSessionCol;
+    @FXML
+    private TableColumn<AppointmentsByMonth, Integer> appointmentsReportStatusUpdateCol;
 
     @FXML
     private void initialize() {
@@ -90,7 +136,54 @@ public class MainMenuController {
         customerLastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("FormattedLast_Update"));
         customerLastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("Last_Updated_By"));
 
-        System.out.println(appointmentsTable.getSortOrder());
+        // Appointment Types report
+        for(int i = 0; i < 3; i ++) { // set year combo box list to value of last year, current year, and next year
+            int lastYear = LocalDateTime.now().getYear() - 1;
+            reportsYearCombo.getItems().add(String.valueOf(lastYear + i));
+        }
+        reportsYearCombo.getSelectionModel().select(1); // select current year as default
+        appointmentsByMonthTable.setItems(AppointmentsByMonthDAO.getAll(LocalDateTime.now().getYear()));
+        appointmentsReportMonthCol.setCellValueFactory(new PropertyValueFactory<>("Month"));
+        appointmentsReportNewClientCol.setCellValueFactory(new PropertyValueFactory<>("NewClient"));
+        appointmentsReportPlanningSessionCol.setCellValueFactory(new PropertyValueFactory<>("PlanningSession"));
+        appointmentsReportStatusUpdateCol.setCellValueFactory(new PropertyValueFactory<>("StatusUpdate"));
+        appointmentsReportDebriefingCol.setCellValueFactory(new PropertyValueFactory<>("Debriefing"));
+
+        // Contact Schedule report
+        reportsContactsCombo.setItems(ContactDAO.getAll());
+        scheduleReportIdCol.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
+        scheduleReportTitleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        scheduleReportTypeCol.setCellValueFactory(new PropertyValueFactory<>("Type"));
+        scheduleReportDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        scheduleReportStartCol.setCellValueFactory(new PropertyValueFactory<>("FormattedStart"));
+        scheduleReportEndCol.setCellValueFactory(new PropertyValueFactory<>("FormattedEnd"));
+        scheduleReportCustomerCol.setCellValueFactory(new PropertyValueFactory<>("Customer_IDAndName"));
+
+        // Customers by Division report
+        customersByDivisionTable.setItems(CustomersByDivisionDAO.getAll());
+        divisionReportDivisionCol.setCellValueFactory(new PropertyValueFactory<>("Division"));
+        divisionReportCustomerCol.setCellValueFactory(new PropertyValueFactory<>("CustomerCount"));
+    }
+
+    @FXML
+    void onAllButtonClick(ActionEvent event) {
+        appointmentsTable.setItems(AppointmentDAO.getAll());
+    }
+
+    @FXML
+    void onCurrentWeekButtonClick(ActionEvent event) {
+        FilteredList<Appointment> filteredAppointments = AppointmentDAO.getAll().filtered(appointment ->
+                appointment.getStart().isAfter(LocalDateTime.now().minusSeconds(1)) &&
+                        appointment.getStart().toLocalDate().isBefore(TimeConversion.firstDayNextWeek()));
+        appointmentsTable.setItems(filteredAppointments);
+    }
+
+    @FXML
+    void onCurrentMonthButtonClick(ActionEvent event) {
+        FilteredList<Appointment> filteredAppointments = AppointmentDAO.getAll().filtered(appointment ->
+                appointment.getStart().isAfter(LocalDateTime.now().minusSeconds(1)) &&
+                        appointment.getStart().toLocalDate().isBefore(TimeConversion.firstDayNextMonth()));
+        appointmentsTable.setItems(filteredAppointments);
     }
 
     @FXML
@@ -156,5 +249,14 @@ public class MainMenuController {
                 DialogBox.generateErrorMessage("Error deleting customer and associated appointments.");
             }
         }
+    }
+
+    @FXML
+    void onReportsYearSelection(ActionEvent event) {
+        AppointmentsByMonthDAO.refresh(Integer.parseInt(reportsYearCombo.getValue()));
+    }
+    @FXML
+    private void onReportsContactSelection(ActionEvent event) {
+        contactScheduleTable.setItems(ContactSchedule.getContactSchedule(reportsContactsCombo.getValue()));
     }
 }

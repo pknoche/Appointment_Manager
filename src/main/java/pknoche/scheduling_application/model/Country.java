@@ -1,8 +1,8 @@
 package pknoche.scheduling_application.model;
 
 public class Country {
-    private int Country_ID;
-    private String Country;
+    private final int Country_ID;
+    private final String Country;
 
     public Country(int country_ID, String country) {
         Country_ID = country_ID;

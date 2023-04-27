@@ -110,33 +110,33 @@ public class AddModifyAppointmentController {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Location field cannot be blank.");
         }
-        if(contactCombo.getSelectionModel().isEmpty()) {
+        if(contactCombo.getValue() == null) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Contact selection cannot be blank.");
         } else {
-            contactId = contactCombo.getSelectionModel().getSelectedItem().getContact_ID();
+            contactId = contactCombo.getValue().getContact_ID();
         }
-        if(typeCombo.getSelectionModel().isEmpty()) {
+        if(typeCombo.getValue() == null) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Type selection cannot be blank.");
         } else {
-            type = typeCombo.getSelectionModel().getSelectedItem();
+            type = typeCombo.getValue();
         }
         if(dateField.getValue() == null) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Date selection cannot be blank.");
         }
-        if(startTimeCombo.getSelectionModel().isEmpty()) {
+        if(startTimeCombo.getValue() == null) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Start selection cannot be blank.");
         } else if(dateField.getValue() != null) {
-            start = LocalDateTime.of(dateField.getValue(), startTimeCombo.getValue());
-            if(start.isBefore(LocalDateTime.now())) {
-                dataInvalid = true;
-                DialogBox.generateErrorMessage("Appointment start time cannot be in the past.");
-            }
+            start = LocalDateTime.of(dateField.getValue(), startTimeCombo.getValue()); //FIXME - not capturing value if typed instead of clicked
+            //if(start.isBefore(LocalDateTime.now())) {TODO - uncomment - commented out for testing purposes
+            //    dataInvalid = true;
+            //    DialogBox.generateErrorMessage("Appointment start time cannot be in the past.");
+            //}
         }
-        if(endTimeCombo.getSelectionModel().isEmpty()) {
+        if(endTimeCombo.getValue() == null) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("End selection cannot be blank.");
         } else if (dateField.getValue() != null) {
@@ -148,17 +148,17 @@ public class AddModifyAppointmentController {
                 DialogBox.generateErrorMessage("End time must be after start time.");
             }
         }
-        if(customerCombo.getSelectionModel().isEmpty()) {
+        if(customerCombo.getValue() == null) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Customer selection cannot be blank.");
         } else {
-            customerId = customerCombo.getSelectionModel().getSelectedItem().getCustomer_ID();
+            customerId = customerCombo.getValue().getCustomer_ID();
         }
-        if(userCombo.getSelectionModel().isEmpty()) {
+        if(userCombo.getValue() == null) {
             dataInvalid = true;
             DialogBox.generateErrorMessage("User selection cannot be blank.");
         } else {
-            userId = userCombo.getSelectionModel().getSelectedItem().getUser_ID();
+            userId = userCombo.getValue().getUser_ID();
         }
 
         if(dataInvalid) {
@@ -195,7 +195,7 @@ public class AddModifyAppointmentController {
         descriptionField.setText(appointment.getDescription());
         locationField.setText(appointment.getLocation());
         contactCombo.setValue(ContactDAO.get(appointment.getContact_ID()));
-        typeCombo.getSelectionModel().select(appointment.getType());
+        typeCombo.setValue(appointment.getType());
         dateField.setValue(appointment.getStart().toLocalDate());
         startTimeCombo.setValue(appointment.getStart().toLocalTime());
         endTimeCombo.setValue(appointment.getEnd().toLocalTime());
