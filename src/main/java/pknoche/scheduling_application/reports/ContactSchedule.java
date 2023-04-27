@@ -1,4 +1,4 @@
-package pknoche.scheduling_application.helper.reports;
+package pknoche.scheduling_application.reports;
 
 import javafx.collections.transformation.FilteredList;
 import pknoche.scheduling_application.database.AppointmentDAO;

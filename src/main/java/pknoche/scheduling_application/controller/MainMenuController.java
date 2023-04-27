@@ -1,5 +1,7 @@
 package pknoche.scheduling_application.controller;
 
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,9 +17,9 @@ import pknoche.scheduling_application.database.reports.CustomersByDivisionDAO;
 import pknoche.scheduling_application.helper.DialogBox;
 import pknoche.scheduling_application.helper.GUI_Navigator;
 import pknoche.scheduling_application.helper.TimeConversion;
-import pknoche.scheduling_application.helper.reports.AppointmentsByMonth;
-import pknoche.scheduling_application.helper.reports.ContactSchedule;
-import pknoche.scheduling_application.helper.reports.CustomersByDivision;
+import pknoche.scheduling_application.reports.AppointmentsByMonth;
+import pknoche.scheduling_application.reports.ContactSchedule;
+import pknoche.scheduling_application.reports.CustomersByDivision;
 import pknoche.scheduling_application.model.Appointment;
 import pknoche.scheduling_application.model.Contact;
 import pknoche.scheduling_application.model.Customer;
@@ -108,10 +110,22 @@ public class MainMenuController {
     @FXML
     private TableColumn<AppointmentsByMonth, Integer> appointmentsReportStatusUpdateCol;
 
+
     @FXML
     private void initialize() {
         // populate table view for appointments table
-        appointmentsTable.setItems(AppointmentDAO.getAll());
+        ObservableList<Appointment> allAppointments = AppointmentDAO.getAll();
+        allAppointments.addListener((ListChangeListener<Appointment>) change -> {
+            while(change.next()) {
+                if (change.getList().isEmpty()) {
+                    // If statement used to only execute the report refresh once when the list is updated.
+                    // This works since the appointments list is cleared when an appointment is added,
+                    // modified, or deleted before being rebuilt from the database.
+                    AppointmentsByMonthDAO.refresh(Integer.parseInt(reportsYearCombo.getValue()));
+                }
+            }
+        });
+        appointmentsTable.setItems(allAppointments);
         appointmentIdCol.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
         appointmentTitleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
         appointmentDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("Description"));
@@ -173,7 +187,8 @@ public class MainMenuController {
     @FXML
     void onCurrentWeekButtonClick(ActionEvent event) {
         FilteredList<Appointment> filteredAppointments = AppointmentDAO.getAll().filtered(appointment ->
-                appointment.getStart().isAfter(LocalDateTime.now().minusSeconds(1)) &&
+                (appointment.getStart().toLocalDate().isEqual(TimeConversion.firstDayThisWeek()) ||
+                        appointment.getStart().toLocalDate().isAfter(TimeConversion.firstDayThisWeek())) &&
                         appointment.getStart().toLocalDate().isBefore(TimeConversion.firstDayNextWeek()));
         appointmentsTable.setItems(filteredAppointments);
     }
@@ -181,7 +196,8 @@ public class MainMenuController {
     @FXML
     void onCurrentMonthButtonClick(ActionEvent event) {
         FilteredList<Appointment> filteredAppointments = AppointmentDAO.getAll().filtered(appointment ->
-                appointment.getStart().isAfter(LocalDateTime.now().minusSeconds(1)) &&
+                (appointment.getStart().toLocalDate().isEqual(TimeConversion.firstDayThisMonth()) ||
+                        appointment.getStart().toLocalDate().isAfter(TimeConversion.firstDayThisMonth())) &&
                         appointment.getStart().toLocalDate().isBefore(TimeConversion.firstDayNextMonth()));
         appointmentsTable.setItems(filteredAppointments);
     }
@@ -202,17 +218,17 @@ public class MainMenuController {
 
     @FXML
     private void onDeleteAppointmentButtonClick(ActionEvent event) {
-        if(appointmentsTable.getSelectionModel().getSelectedItem() == null) {
-            return;
-        } else if(DialogBox.generateConfirmationMessage("Are you sure you would like to delete this appointment? " +
-                "This action cannot be undone.")) {
-            int appointmentId = appointmentsTable.getSelectionModel().getSelectedItem().getAppointment_ID();
-            String appointmentType = appointmentsTable.getSelectionModel().getSelectedItem().getType();
-            if(AppointmentDAO.delete(appointmentsTable.getSelectionModel().getSelectedItem())) {
-                        DialogBox.generateInformationMessage(appointmentType + " appointment (Appointment ID #" +
-                                appointmentId + ") deleted.");
-            } else {
-                        DialogBox.generateErrorMessage("Error deleting appointment.");
+        if(appointmentsTable.getSelectionModel().getSelectedItem() != null) {
+            if (DialogBox.generateConfirmationMessage("Are you sure you would like to delete this appointment? " +
+                    "This action cannot be undone.")) {
+                int appointmentId = appointmentsTable.getSelectionModel().getSelectedItem().getAppointment_ID();
+                String appointmentType = appointmentsTable.getSelectionModel().getSelectedItem().getType();
+                if (AppointmentDAO.delete(appointmentsTable.getSelectionModel().getSelectedItem())) {
+                    DialogBox.generateInformationMessage(appointmentType + " appointment (Appointment ID #" +
+                            appointmentId + ") deleted.");
+                } else {
+                    DialogBox.generateErrorMessage("Error deleting appointment.");
+                }
             }
         }
     }
@@ -233,20 +249,20 @@ public class MainMenuController {
 
     @FXML
     private void onDeleteCustomerButtonClick(ActionEvent event) {
-        if(customersTable.getSelectionModel().getSelectedItem() == null) {
-            return;
-        } else if(DialogBox.generateConfirmationMessage("Are you sure you would like to delete this customer?" +
-                "Any associated appointments will also be deleted. This action cannot be undone.")) {
-            if(AppointmentDAO.delete(customersTable.getSelectionModel().getSelectedItem().getCustomer_ID())) {
-                if(CustomerDAO.delete(customersTable.getSelectionModel().getSelectedItem())) {
-                    DialogBox.generateInformationMessage("Successfully deleted customer and " +
-                            "all associated appointments.");
+        if(customersTable.getSelectionModel().getSelectedItem() != null) {
+            if (DialogBox.generateConfirmationMessage("Are you sure you would like to delete this customer?" +
+                    "Any associated appointments will also be deleted. This action cannot be undone.")) {
+                if (AppointmentDAO.delete(customersTable.getSelectionModel().getSelectedItem().getCustomer_ID())) {
+                    if (CustomerDAO.delete(customersTable.getSelectionModel().getSelectedItem())) {
+                        DialogBox.generateInformationMessage("Successfully deleted customer and " +
+                                "all associated appointments.");
+                    } else {
+                        DialogBox.generateErrorMessage("Successfully deleted customer's associated appointments," +
+                                "but encountered an error when attempting to delete customer.");
+                    }
                 } else {
-                    DialogBox.generateErrorMessage("Successfully deleted customer's associated appointments," +
-                            "but encountered an error when attempting to delete customer.");
+                    DialogBox.generateErrorMessage("Error deleting customer and associated appointments.");
                 }
-            } else {
-                DialogBox.generateErrorMessage("Error deleting customer and associated appointments.");
             }
         }
     }

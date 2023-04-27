@@ -11,20 +11,19 @@ import java.sql.SQLException;
 public class CountryDAO {
     private static final ObservableList<Country> allCountries = FXCollections.observableArrayList();
     public static ObservableList<Country> getAll() {
-        try {
             allCountries.clear();
             String sql = "SELECT Country_ID, Country FROM client_schedule.countries;";
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int Country_ID = rs.getInt("Country_ID");
-                String Country = rs.getString("Country");
-                Country country = new Country(Country_ID, Country);
-                allCountries.add(country);
+            try(PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int Country_ID = rs.getInt("Country_ID");
+                    String Country = rs.getString("Country");
+                    Country country = new Country(Country_ID, Country);
+                    allCountries.add(country);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error getting list of countries from database.");
             }
-        } catch (SQLException e) {
-            System.out.println("Error getting list of countries.");
-        }
         return allCountries;
     }
 

@@ -1,7 +1,7 @@
-package pknoche.scheduling_application.helper.reports;
+package pknoche.scheduling_application.reports;
 
 public class CustomersByDivision {
-    private String division;
+    private final String division;
     int customerCount;
 
     public CustomersByDivision(String division, int customerCount) {
