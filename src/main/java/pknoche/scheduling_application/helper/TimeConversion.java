@@ -35,7 +35,15 @@ public class TimeConversion {
         return LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
     }
 
+    public static LocalDate firstDayThisWeek() {
+        return LocalDate.now().with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+    }
+
     public static LocalDate firstDayNextMonth() {
         return LocalDate.now().with(TemporalAdjusters.firstDayOfNextMonth());
+    }
+
+    public static LocalDate firstDayThisMonth() {
+        return LocalDate.now().with(TemporalAdjusters.firstDayOfMonth());
     }
 }

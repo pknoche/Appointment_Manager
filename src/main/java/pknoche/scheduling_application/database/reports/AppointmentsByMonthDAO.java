@@ -3,7 +3,7 @@ package pknoche.scheduling_application.database.reports;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pknoche.scheduling_application.database.DatabaseConnection;
-import pknoche.scheduling_application.helper.reports.AppointmentsByMonth;
+import pknoche.scheduling_application.reports.AppointmentsByMonth;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +14,6 @@ public class AppointmentsByMonthDAO {
 
     public static ObservableList<AppointmentsByMonth> getAll(int year) {
         if(allAppointmentsByMonth.isEmpty()) {
-            try {
                 String sql = """
                         SELECT
                             MONTHNAME(Start) AS Month,
@@ -37,28 +36,28 @@ public class AppointmentsByMonthDAO {
                             YEAR(Start) = ?
                         GROUP BY Month , MonthNumber
                         ORDER BY MonthNumber;""";
-                PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
-                ps.setInt(1, year);
-                ResultSet rs = ps.executeQuery();
-                while(rs.next()) {
+                try(PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
+                    ps.setInt(1, year);
+                    ResultSet rs = ps.executeQuery();
+                    while (rs.next()) {
 
-                    String month = rs.getString("Month");
-                    int newClient = rs.getInt("NewClient");
-                    int planningSession = rs.getInt("PlanningSession");
-                    int statusUpdate = rs.getInt("StatusUpdate");
-                    int debriefing = rs.getInt("DeBriefing");
-                    AppointmentsByMonth a = new AppointmentsByMonth(month, newClient,
-                            planningSession, statusUpdate, debriefing);
-                    allAppointmentsByMonth.add(a);
+                        String month = rs.getString("Month");
+                        int newClient = rs.getInt("NewClient");
+                        int planningSession = rs.getInt("PlanningSession");
+                        int statusUpdate = rs.getInt("StatusUpdate");
+                        int debriefing = rs.getInt("DeBriefing");
+                        AppointmentsByMonth a = new AppointmentsByMonth(month, newClient,
+                                planningSession, statusUpdate, debriefing);
+                        allAppointmentsByMonth.add(a);
+                    }
+                } catch (SQLException e) {
+                    System.out.println(e.getMessage());
                 }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
         }
         return allAppointmentsByMonth;
     }
 
-    public static void refresh(int year) { //TODO - add functionality to call method on appointments list change
+    public static void refresh(int year) {
         allAppointmentsByMonth.clear();
         getAll(year);
     }

@@ -20,8 +20,8 @@ import pknoche.scheduling_application.model.User;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class AddModifyAppointmentController {
 
+public class AddModifyAppointmentController {
     @FXML
     private TextField appointmentIdField;
     @FXML
@@ -130,7 +130,7 @@ public class AddModifyAppointmentController {
             dataInvalid = true;
             DialogBox.generateErrorMessage("Start selection cannot be blank.");
         } else if(dateField.getValue() != null) {
-            start = LocalDateTime.of(dateField.getValue(), startTimeCombo.getValue()); //FIXME - not capturing value if typed instead of clicked
+            start = LocalDateTime.of(dateField.getValue(), startTimeCombo.getValue());
             //if(start.isBefore(LocalDateTime.now())) {TODO - uncomment - commented out for testing purposes
             //    dataInvalid = true;
             //    DialogBox.generateErrorMessage("Appointment start time cannot be in the past.");

@@ -1,4 +1,4 @@
-package pknoche.scheduling_application.helper.reports;
+package pknoche.scheduling_application.reports;
 
 public class AppointmentsByMonth {
     String month;
