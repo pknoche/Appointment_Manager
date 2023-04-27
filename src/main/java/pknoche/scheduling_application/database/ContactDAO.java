@@ -13,20 +13,21 @@ public class ContactDAO {
     private static final ObservableList<Contact> allContacts = FXCollections.observableArrayList();
 
     public static ObservableList<Contact> getAll() {
-        try {
-            allContacts.clear();
-            String sql = "SELECT Contact_ID, Contact_Name FROM client_schedule.contacts";
-            PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
-                int Contact_ID = rs.getInt("Contact_ID");
-                String Contact_Name = rs.getString("Contact_Name");
-                Contact contact = new Contact(Contact_ID, Contact_Name);
-                allContacts.add(contact);
+        if(allContacts.isEmpty()) {
+            try {
+                String sql = "SELECT Contact_ID, Contact_Name FROM client_schedule.contacts;";
+                PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int Contact_ID = rs.getInt("Contact_ID");
+                    String Contact_Name = rs.getString("Contact_Name");
+                    Contact contact = new Contact(Contact_ID, Contact_Name);
+                    allContacts.add(contact);
+                }
+            } catch (SQLException e) {
+                DialogBox.generateErrorMessage("Error retrieving contacts from database.");
+                System.out.println(e.getMessage());
             }
-        } catch (SQLException e) {
-            DialogBox.generateErrorMessage("Error retrieving contacts from database.");
-            System.out.println(e.getMessage());
         }
         return allContacts;
     }

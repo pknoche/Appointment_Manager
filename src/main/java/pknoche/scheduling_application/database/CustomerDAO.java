@@ -2,6 +2,7 @@ package pknoche.scheduling_application.database;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pknoche.scheduling_application.database.reports.CustomersByDivisionDAO;
 import pknoche.scheduling_application.helper.DialogBox;
 import pknoche.scheduling_application.model.Customer;
 
@@ -11,12 +12,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public abstract class CustomerDAO {
+public class CustomerDAO {
     private static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     public static boolean create(Customer customer) {
         try {
-            String sql = "INSERT INTO client_schedule.customers VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO client_schedule.customers VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setString(1, customer.getCustomer_Name());
             ps.setString(2, customer.getAddress());
@@ -29,6 +30,7 @@ public abstract class CustomerDAO {
             ps.setInt(9, customer.getDivision_ID());
             ps.executeUpdate();
             refresh();
+            CustomersByDivisionDAO.refresh();
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -40,8 +42,7 @@ public abstract class CustomerDAO {
     public static ObservableList<Customer> getAll() {
         if(allCustomers.isEmpty()) {
             try {
-                allCustomers.clear();
-                String sql = "SELECT * FROM client_schedule.customers";
+                String sql = "SELECT * FROM client_schedule.customers;";
                 PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
@@ -83,9 +84,18 @@ public abstract class CustomerDAO {
 
     public static boolean update(Customer customer) {
         try {
-            String sql = "UPDATE client_schedule.customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, " +
-                    "Phone = ?, Last_Update = ?, Last_Updated_By = ?, Division_ID = ? " +
-                    "WHERE Customer_ID = ?";
+            String sql = """
+                    UPDATE client_schedule.customers
+                    SET
+                        Customer_Name = ?,
+                        Address = ?,
+                        Postal_Code = ?,
+                        Phone = ?,
+                        Last_Update = ?,
+                        Last_Updated_By = ?,
+                        Division_ID = ?
+                    WHERE
+                        Customer_ID = ?;""";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setString(1, customer.getCustomer_Name());
             ps.setString(2, customer.getAddress());
@@ -95,9 +105,9 @@ public abstract class CustomerDAO {
             ps.setString(6, customer.getLast_Updated_By());
             ps.setInt(7, customer.getDivision_ID());
             ps.setInt(8, customer.getCustomer_ID());
-            System.out.println(ps);
             ps.executeUpdate();
             refresh();
+            CustomersByDivisionDAO.refresh();
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -107,11 +117,12 @@ public abstract class CustomerDAO {
 
     public static boolean delete(Customer customer) {
         try {
-            String sql = "DELETE FROM client_schedule.customers WHERE customer_ID = ?";
+            String sql = "DELETE FROM client_schedule.customers WHERE customer_ID = ?;";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setInt(1, customer.getCustomer_ID());
             ps.executeUpdate();
             refresh();
+            CustomersByDivisionDAO.refresh();
             return true;
 
         } catch (SQLException e) {

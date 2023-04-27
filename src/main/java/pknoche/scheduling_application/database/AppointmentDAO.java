@@ -5,15 +5,20 @@ import javafx.collections.ObservableList;
 import pknoche.scheduling_application.helper.DialogBox;
 import pknoche.scheduling_application.model.Appointment;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public abstract class AppointmentDAO {
+public class AppointmentDAO {
     private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+    //private static final FilteredList<Appointment> filteredAppointments = new FilteredList<>(allAppointments);
 
     public static boolean create(Appointment appointment) {
         try {
-            String sql = "INSERT INTO client_schedule.appointments VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = """
+                    INSERT INTO client_schedule.appointments VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);""";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setString(1, appointment.getTitle());
             ps.setString(2, appointment.getDescription());
@@ -40,12 +45,21 @@ public abstract class AppointmentDAO {
     public static ObservableList<Appointment> getAll() {
         if(allAppointments.isEmpty()) {
             try {
-                allAppointments.clear();
-                String sql = "SELECT appointments.*, customers.Customer_Name, users.User_Name, contacts.Contact_Name " +
-                        "FROM client_schedule.appointments " +
-                        "INNER JOIN client_schedule.customers USING (Customer_ID) " +
-                        "INNER JOIN client_schedule.users USING (User_ID) " +
-                        "INNER JOIN client_schedule.contacts USING (Contact_ID)";
+                String sql = """
+                        SELECT
+                            appointments.*,
+                            customers.Customer_Name,
+                            users.User_Name,
+                            contacts.Contact_Name
+                        FROM
+                            client_schedule.appointments
+                                INNER JOIN
+                            client_schedule.customers USING (Customer_ID)
+                                INNER JOIN
+                            client_schedule.users USING (User_ID)
+                                INNER JOIN
+                            client_schedule.contacts USING (Contact_ID)
+                        ORDER BY Start;""";
                 PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql); //FIXME - try with resources?
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
@@ -84,9 +98,22 @@ public abstract class AppointmentDAO {
 
     public static boolean update(Appointment appointment) {
         try {
-            String sql = "UPDATE client_schedule.appointments SET Title = ?, Description = ?, Location = ?, Type = ?, " +
-                    "Start = ?, End = ?, Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, " +
-                    "Contact_ID = ? WHERE Appointment_ID = ?";
+            String sql = """
+                     UPDATE client_schedule.appointments
+                     SET
+                         Title = ?,
+                         Description = ?,
+                         Location = ?,
+                         Type = ?,
+                         Start = ?,
+                         End = ?,
+                         Last_Update = ?,
+                         Last_Updated_By = ?,
+                         Customer_ID = ?,
+                         User_ID = ?,
+                         Contact_ID = ?
+                     WHERE
+                         Appointment_ID = ?;""";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setString(1, appointment.getTitle());
             ps.setString(2, appointment.getDescription());
@@ -111,7 +138,7 @@ public abstract class AppointmentDAO {
 
     public static boolean delete(Appointment appointment) {
         try {
-            String sql = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?";
+            String sql = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?;";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setInt(1, appointment.getAppointment_ID());
             ps.executeUpdate();
@@ -125,7 +152,7 @@ public abstract class AppointmentDAO {
 
     public static boolean delete(int customerId) {
         try {
-            String sql = "DELETE FROM client_schedule.appointments WHERE Customer_ID = ?";
+            String sql = "DELETE FROM client_schedule.appointments WHERE Customer_ID = ?;";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ps.setInt(1, customerId);
             ps.executeUpdate();

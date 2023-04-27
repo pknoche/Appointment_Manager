@@ -8,12 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class CountryDAO {
+public class CountryDAO {
     private static final ObservableList<Country> allCountries = FXCollections.observableArrayList();
     public static ObservableList<Country> getAll() {
         try {
             allCountries.clear();
-            String sql = "SELECT Country_ID, Country FROM client_schedule.countries";
+            String sql = "SELECT Country_ID, Country FROM client_schedule.countries;";
             PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

@@ -11,4 +11,6 @@ module pknoche.scheduling_application {
     exports pknoche.scheduling_application.controller;
     opens pknoche.scheduling_application.model;
     exports pknoche.scheduling_application.model;
+    opens pknoche.scheduling_application.helper.reports;
+    exports pknoche.scheduling_application.helper.reports;
 }

@@ -1,11 +1,9 @@
 package pknoche.scheduling_application.model;
 
-import java.sql.Timestamp;
-
 public class FirstLevelDivision {
-    private int Division_ID;
-    private String Division;
-    private int Country_ID;
+    private final int Division_ID;
+    private final String Division;
+    private final int Country_ID;
 
     public FirstLevelDivision(int division_ID, String division, int country_ID) {
         Division_ID = division_ID;

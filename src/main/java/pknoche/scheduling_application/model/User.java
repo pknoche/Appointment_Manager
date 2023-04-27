@@ -1,8 +1,5 @@
 package pknoche.scheduling_application.model;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-
 public class User {
     private int User_ID;
     private String User_Name;
