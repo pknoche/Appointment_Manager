@@ -33,6 +33,17 @@ public class TimeConversion {
     }
 
     /**
+     * Converts a localTime to a formatted string in "HH:mm" format.
+     *
+     * @param localTime time to be formatted
+     * @return String containing formatted time
+     */
+    public static String toFormattedString(LocalTime localTime) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+        return dtf.format(localTime);
+    }
+
+    /**
      * Converts a localDateTime to a formatted string in UTC.
      *
      * @param localDateTime time to be converted and formatted

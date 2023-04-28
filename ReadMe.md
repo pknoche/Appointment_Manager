@@ -22,7 +22,8 @@ Upon launching the program, you will be greeted with the login screen. This scre
 to English or French based on your system configuration. It contains text fields for your database username and 
 password. Your time zone is shown at the bottom of the window. After entering your username and password, click the 
 "Login" button. If the username and password were correct, the main menu will automatically launch. If the username
-and password were incorrect, you will be prompted to try again.
+and password were incorrect, you will be prompted to try again. All login attempts are logged to a file contained
+in the logs folder, which is located in the root directory of the program.
 
 #### Main Menu:
 After logging in, a dialog box will be generated that displays whether there are any upcoming appointments
@@ -35,7 +36,7 @@ section of the application. Clicking any of these tabs will take you to the corr
 ##### Appointments Tab:
 The appointments tab is shown by default when first logging in. It contains radio buttons at the top of the screen for
 filtering the table to show all appointments, appointments in the current week, and appointments in the current month.
-Clicking any of these appointments will filter the list accordingly. <br>
+Clicking any of these buttons will filter the list accordingly. <br>
 
 The table shows a list of appointments. It is sorted by default according to the appointment start time, but can be
 sorted by any column by clicking on the column header. <br>
@@ -44,12 +45,13 @@ sorted by any column by clicking on the column header. <br>
 To create a new appointment, click on the "Create New Appointment" button at the bottom of the window. This will
 launch the create appointment form. Fill out the fields in the form and click the save button at the bottom to 
 create a new appointment. Please note that the appointment ID is automatically generated and cannot be overridden.
-After filling out the fields, click the "Save" button. Please note that data validation is performed on the values 
-entered. This validation checks to ensure that no fields are left blank, the date is not in the past, the start time
-is not set to occur after the end time, and the appointment time does not overlap with another existing appointment 
-for the customer the appointment is being created for. If the data passes validation, a success message will be 
-displayed to confirm that the appointment was created. If the data does not pass validation, a message will be 
-displayed indicating what needs to be corrected.
+After filling out the fields, click the "Save" button. Note that start and end times can only be selected 
+during business hours, which are automatically calculated based on your timezone.
+Please also note that data validation is performed on the values entered. This validation checks to ensure that no
+fields are left blank, the start time is not set to occur after the end time, the start date is not in the past, and the
+appointment time does not overlap with another existing appointment for the customer the appointment is being created 
+for. If the data passes validation, a success message will be displayed to confirm that the appointment was created. 
+If the data does not pass validation, a message will be displayed indicating what needs to be corrected.
 
 ###### Modifying an appointment:
 Modifying an appointment is identical to creating an appointment, except the fields are pre-filled using the
@@ -64,8 +66,8 @@ appointment was successfully deleted.
 
 ##### Customers Tab:
 The customers tab contains identical functionality to the appointments tab, and the steps are the same for creating,
-modifying, and deleting customers as they are appointments. The only functional difference from appointments is that,
-when deleting a customer, appointments associated with that customer will be deleted in addition to the customer.
+modifying, and deleting customers as they are for appointments. The only functional difference from appointments is
+that, when deleting a customer, appointments associated with that customer will be deleted in addition to the customer.
 
 ##### Reports Tab:
 The reports tab contains three different reports that display information about appointments and customers in the
@@ -85,5 +87,5 @@ The customers by division report displays a summation of all customers in the da
 that have at least one customer assigned to them are displayed.
 
 #### Exiting the program:
-To exit the program, simply click the X button at the top of the window. There is no need to manually save anything 
+To exit the program, click the X button at the top of the window. There is no need to manually save anything
 before exiting since data is automatically synchronized with the database.

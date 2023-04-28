@@ -118,7 +118,7 @@ public class AddModifyCustomerController {
         }
         if(divisionIdCombo.getValue() == null) {
             dataInvalid = true;
-            DialogBox.generateErrorMessage("Division ID field cannot be blank.");
+            DialogBox.generateErrorMessage("Division ID selection cannot be blank.");
         } else {
             divisionId = divisionIdCombo.getValue().getDivision_ID();
         }

@@ -144,17 +144,17 @@ public class AddModifyAppointmentController {
         }
         if(startTimeCombo.getValue() == null) {
             dataInvalid = true;
-            DialogBox.generateErrorMessage("Start selection cannot be blank.");
+            DialogBox.generateErrorMessage("Start time selection cannot be blank.");
         } else if(dateField.getValue() != null) {
             start = LocalDateTime.of(dateField.getValue(), startTimeCombo.getValue());
-            //if(start.isBefore(LocalDateTime.now())) {TODO - uncomment - commented out for testing purposes
-            //    dataInvalid = true;
-            //    DialogBox.generateErrorMessage("Appointment start time cannot be in the past.");
-            //}
+            if(start.isBefore(LocalDateTime.now())) {
+                dataInvalid = true;
+                DialogBox.generateErrorMessage("Appointment start time cannot be in the past.");
+            }
         }
         if(endTimeCombo.getValue() == null) {
             dataInvalid = true;
-            DialogBox.generateErrorMessage("End selection cannot be blank.");
+            DialogBox.generateErrorMessage("End time selection cannot be blank.");
         } else if (dateField.getValue() != null) {
             end = LocalDateTime.of(dateField.getValue(), endTimeCombo.getValue());
         }

@@ -44,7 +44,8 @@ public class GUI_Navigator {
      */
     public static void replaceScene(String menuName, String stageName, ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(GUI_Navigator.class.getResource(resourceLocator(menuName))));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(GUI_Navigator.class.
+                    getResource(resourceLocator(menuName))));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setTitle(stageName);

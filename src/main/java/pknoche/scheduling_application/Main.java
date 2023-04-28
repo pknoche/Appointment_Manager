@@ -1,6 +1,7 @@
 package pknoche.scheduling_application;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,16 +18,20 @@ public class Main extends Application {
 
     /**
      * Gets the login screen resource path and creates new stage set to login screen. Sets language of login screen
-     * to English or French based on user's system configuration.
+     * to English or French based on user's system configuration. This method contains a lambda function
+     * that sets the program to exit when the main stage is closed.
      *
      * @param stage stage to show
      * @throws IOException if login screen resource(s) cannot be found
      */
     @Override
     public void start(Stage stage) throws IOException {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("pknoche.scheduling_application.localization.languages", Locale.getDefault());
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/pknoche/scheduling_application/GUI/LoginMenu.fxml"), resourceBundle);
+        ResourceBundle resourceBundle = ResourceBundle.getBundle
+                ("pknoche.scheduling_application.localization.languages", Locale.getDefault());
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource
+                ("/pknoche/scheduling_application/GUI/LoginMenu.fxml"), resourceBundle);
         Scene scene = new Scene(fxmlLoader.load());
+        stage.setOnCloseRequest(windowEvent -> Platform.exit());
         stage.setTitle(resourceBundle.getString("windowTitle"));
         stage.setScene(scene);
         stage.show();

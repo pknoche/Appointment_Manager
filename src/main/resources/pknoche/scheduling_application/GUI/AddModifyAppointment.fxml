@@ -2,18 +2,18 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pknoche.scheduling_application.controller.AddModifyAppointmentController">
+<AnchorPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pknoche.scheduling_application.controller.AddModifyAppointmentController">
    <children>
-      <ButtonBar layoutX="386.0" layoutY="746.0" prefHeight="40.0" prefWidth="200.0">
+      <ButtonBar layoutX="386.0" layoutY="746.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
         <buttons>
           <Button mnemonicParsing="false" onAction="#onCancelButtonClick" text="Cancel" />
             <Button mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
         </buttons>
       </ButtonBar>
-      <GridPane layoutX="26.0" layoutY="19.0" prefHeight="725.0" prefWidth="551.0">
+      <GridPane layoutX="26.0" layoutY="19.0" prefHeight="725.0" prefWidth="551.0" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="19.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="104.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="345.0" minWidth="10.0" prefWidth="345.0" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="1920.0" minWidth="10.0" prefWidth="345.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -29,28 +29,28 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Appointment ID" />
             <Label text="Title" GridPane.rowIndex="1" />
-            <Label text="Description" GridPane.rowIndex="2" />
-            <Label text="Location" GridPane.rowIndex="3" />
-            <Label text="Contact" GridPane.rowIndex="4" />
-            <Label text="Type" GridPane.rowIndex="5" />
-            <Label text="Date" GridPane.rowIndex="6" />
-            <Label text="Start Time" GridPane.rowIndex="7" />
-            <Label text="Customer" GridPane.rowIndex="9" />
-            <Label text="User" GridPane.rowIndex="10" />
-            <TextField fx:id="appointmentIdField" editable="false" focusTraversable="false" promptText="Auto Generated" GridPane.columnIndex="1" />
             <TextField fx:id="titleField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Description" GridPane.rowIndex="2" />
             <TextField fx:id="descriptionField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ComboBox fx:id="contactCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DatePicker fx:id="dateField" editable="false" promptText="Select from calendar -&gt;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <ComboBox fx:id="customerCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <ComboBox fx:id="userCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <Label text="End Time" GridPane.rowIndex="8" />
-            <ComboBox fx:id="typeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <ComboBox fx:id="endTimeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <ComboBox fx:id="startTimeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Location" GridPane.rowIndex="3" />
             <TextField fx:id="locationField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Contact" GridPane.rowIndex="4" />
+            <ComboBox fx:id="contactCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Type" GridPane.rowIndex="5" />
+            <ComboBox fx:id="typeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Date" GridPane.rowIndex="6" />
+            <DatePicker fx:id="dateField" editable="false" promptText="Select from calendar -&gt;" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Start Time" GridPane.rowIndex="7" />
+            <ComboBox fx:id="startTimeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="End Time" GridPane.rowIndex="8" />
+            <ComboBox fx:id="endTimeCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label text="Customer" GridPane.rowIndex="9" />
+            <ComboBox fx:id="customerCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Label text="User" GridPane.rowIndex="10" />
+            <ComboBox fx:id="userCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Label text="Appointment ID" />
+            <TextField fx:id="appointmentIdField" editable="false" focusTraversable="false" promptText="Auto Generated" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>
