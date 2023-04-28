@@ -16,6 +16,10 @@ import pknoche.scheduling_application.model.FirstLevelDivision;
 
 import java.time.LocalDateTime;
 
+/**
+ * Controller for the AddModifyCustomer GUI. Contains logic for creating, modifying, deleting,
+ * and validating customers.
+ */
 public class AddModifyCustomerController {
     @FXML
     private TextField addressField;
@@ -32,11 +36,19 @@ public class AddModifyCustomerController {
     @FXML
     private ComboBox<Country> countryCombo;
 
+    /**
+     * Sets values in Country ComboBox.
+     */
     @FXML
     private void initialize() {
         countryCombo.setItems(CountryDAO.getAll());
     }
 
+    /**
+     * Sets values in ComboBox for division ID after selecting country.
+     *
+     * @param event country selected in country ComboBox
+     */
     @FXML
     private void onCountrySelection(ActionEvent event) {
         if(countryCombo.getValue() == null) { // to prevent ActionEvent created by setItems in countryCombo list during initialize from trying to set divisionIdCombo with null value
@@ -47,6 +59,11 @@ public class AddModifyCustomerController {
         divisionIdCombo.setDisable(false);
     }
 
+    /**
+     * Prompts user to confirm cancellation. If OK is clicked, closes form and discards data.
+     *
+     * @param event cancel button clicked
+     */
     @FXML
     private void onCancelButtonClick(ActionEvent event) {
         if(DialogBox.generateConfirmationMessage("Are you sure you would like to cancel? " +
@@ -55,6 +72,11 @@ public class AddModifyCustomerController {
         }
     }
 
+    /**
+     * Saves customer if validation passes. If validation does not pass, displays error messages indicating why.
+     *
+     * @param event save button clicked
+     */
     @FXML
     private void onSaveButtonClick(ActionEvent event) {
         boolean newCustomer = customerIdField.getText().isEmpty(); // determine if appointment is being created or modified based on value of appointmentId field
@@ -126,6 +148,11 @@ public class AddModifyCustomerController {
         }
     }
 
+    /**
+     * Sets fields to proper values on AddModifyCustomer screen when modifying a customer.
+     *
+     * @param customer customer selected when modify button was clicked on main menu
+     */
      public void modify(Customer customer) {
         customerIdField.setText(String.valueOf(customer.getCustomer_ID()));
         customerNameField.setText(customer.getCustomer_Name());

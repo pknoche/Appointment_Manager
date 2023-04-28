@@ -11,9 +11,21 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * Contains methods for reading and modifying data associated with appointments in the database.
+ */
 public class AppointmentDAO {
+    /**
+     * List of all appointments from the database.
+     */
     private static final ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
+    /**
+     * Generates and executes a SQL command to create a new appointment using data passed in from an appointment object.
+     *
+     * @param appointment appointment object containing data to be added to the database
+     * @return true if the appointment was successfully created
+     */
     public static boolean create(Appointment appointment) {
             String sql = """
                     INSERT INTO client_schedule.appointments VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);""";
@@ -40,6 +52,11 @@ public class AppointmentDAO {
             }
     }
 
+    /**
+     * Generates and executes a SQL command to get all appointments from the database and puts them in a list.
+     *
+     * @return observable list of appointments
+     */
     public static ObservableList<Appointment> getAll() {
         if(allAppointments.isEmpty()) {
                 String sql = """
@@ -88,11 +105,20 @@ public class AppointmentDAO {
         return allAppointments;
     }
 
+    /**
+     * Clears data from the allAppointments list and calls the getAll() method to regenerate it from the database.
+     */
     public static void refresh() {
         allAppointments.clear();
         getAll();
     }
 
+    /**
+     * Generates and executes a SQL command to update an existing appointment in the database.
+     *
+     * @param appointment appointment object containing data to be updated
+     * @return true if the appointment was successfully updated
+     */
     public static boolean update(Appointment appointment) {
             String sql = """
                      UPDATE client_schedule.appointments
@@ -132,6 +158,12 @@ public class AppointmentDAO {
             }
     }
 
+    /**
+     * Generates and executes a SQL command to delete an appointment from the database given a specific appointment.
+     *
+     * @param appointment appointment object containing data to be deleted
+     * @return true if the deletion was successful
+     */
     public static boolean delete(Appointment appointment) {
             String sql = "DELETE FROM client_schedule.appointments WHERE Appointment_ID = ?;";
             try(PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
@@ -145,6 +177,13 @@ public class AppointmentDAO {
             }
     }
 
+    /**
+     * Generates and executes a SQL command to delete all appointments from the database associated with a specific
+     * customer ID.
+     *
+     * @param customerId customer ID to delete associated appointments for
+     * @return true if the deletion was successful
+     */
     public static boolean delete(int customerId) {
             String sql = "DELETE FROM client_schedule.appointments WHERE Customer_ID = ?;";
             try(PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
@@ -158,6 +197,12 @@ public class AppointmentDAO {
             }
     }
 
+    /**
+     * Checks if a new appointment overlaps with an existing appointment for a specific customer.
+     *
+     * @param newAppointment appointment object containing data to check for overlap
+     * @return true if an overlap is found
+     */
     public static boolean appointmentOverlaps(Appointment newAppointment) {
         for(Appointment a : allAppointments) {
             if((newAppointment.getCustomer_ID() == a.getCustomer_ID()) &&

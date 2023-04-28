@@ -20,7 +20,10 @@ import pknoche.scheduling_application.model.User;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-
+/**
+ * Controller for the AddModifyAppointment GUI. Contains logic for creating, modifying, deleting,
+ * and validating appointments.
+ */
 public class AddModifyAppointmentController {
     @FXML
     private TextField appointmentIdField;
@@ -45,6 +48,9 @@ public class AddModifyAppointmentController {
     @FXML
     private ComboBox<User> userCombo;
 
+    /**
+     * Sets values of ComboBoxes before launching AddModifyAppointment GUI.
+     */
     @FXML
     private void initialize() {
         contactCombo.setItems(ContactDAO.getAll());
@@ -63,6 +69,11 @@ public class AddModifyAppointmentController {
         }
     }
 
+    /**
+     * Prompts user to confirm cancellation. If OK is clicked, closes form and discards data.
+     *
+     * @param event cancel button clicked
+     */
     @FXML
     private void onCancelButtonClick(ActionEvent event) {
         if(DialogBox.generateConfirmationMessage("Are you sure you would like to cancel? The information entered will be discarded.")) { // if OK is clicked, then close window
@@ -70,6 +81,11 @@ public class AddModifyAppointmentController {
         }
     }
 
+    /**
+     * Saves appointment if validation passes. If validation does not pass, displays error messages indicating why.
+     *
+     * @param event save button clicked
+     */
     @FXML
     private void onSaveButtonClick(ActionEvent event) {
         boolean newAppointment = appointmentIdField.getText().isBlank(); // determine if appointment is being created or modified based on value of appointmentId field
@@ -189,6 +205,11 @@ public class AddModifyAppointmentController {
         }
     }
 
+    /**
+     * Sets fields to proper values on AddModifyAppointment screen when modifying an appointment.
+     *
+     * @param appointment appointment selected when modify button was clicked on main menu
+     */
     public void modify(Appointment appointment) {
         appointmentIdField.setText(String.valueOf(appointment.getAppointment_ID()));
         titleField.setText(appointment.getTitle());

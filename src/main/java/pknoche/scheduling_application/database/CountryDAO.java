@@ -8,8 +8,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Contains methods for reading country information from the database.
+ */
 public class CountryDAO {
+    /**
+     * List of all countries from the database.
+     */
     private static final ObservableList<Country> allCountries = FXCollections.observableArrayList();
+
+    /**
+     * Generates and executes a SQL query to get all countries from the database and puts them in a list.
+     *
+     * @return observable list of all countries
+     */
     public static ObservableList<Country> getAll() {
             allCountries.clear();
             String sql = "SELECT Country_ID, Country FROM client_schedule.countries;";
@@ -27,6 +39,12 @@ public class CountryDAO {
         return allCountries;
     }
 
+    /**
+     * Gets a specific country by ID.
+     *
+     * @param countryId country ID of country to be found
+     * @return country associated with specified country if found
+     */
     public static Country get(int countryId) {
         for (Country c : allCountries) {
             if (c.getCountry_ID() == countryId) {

@@ -7,7 +7,15 @@ import pknoche.scheduling_application.model.Appointment;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Contains method for generating alert for upcoming appointments when logging into the program.
+ */
 public class AppointmentAlert {
+    /**
+     * Checks for upcoming appointments within 15 minutes of system time. Displays alert with information about
+     * all appointments occurring within 15 minutes, or displays an alert if no appointments are occurring within
+     * 15 minutes.
+     */
     public static void execute() {
         ObservableList<Appointment> allAppointments = AppointmentDAO.getAll();
         LocalDateTime now = LocalDateTime.now();
