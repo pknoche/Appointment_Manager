@@ -16,9 +16,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.Locale;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the login controller. Contains logic for validating login information and generating logs.
+ */
 public class LoginController {
     @FXML
     private PasswordField passwordField;
@@ -29,11 +32,19 @@ public class LoginController {
     @FXML
     private ResourceBundle resources;
 
+    /**
+     * Sets locale label based on user's system configuration.
+     */
     @FXML
     private void initialize() {
-        localeLabel.setText(localeLabel.getText() + Locale.getDefault().getDisplayName());
+        localeLabel.setText(localeLabel.getText() + ZoneId.systemDefault());
     }
 
+    /**
+     * Validates user login information. Generates logs for successful and unsuccessful login attempts.
+     *
+     * @param event login button clicked
+     */
     @FXML
     private void onLoginButtonClick(ActionEvent event) {
         String username = usernameField.getText();

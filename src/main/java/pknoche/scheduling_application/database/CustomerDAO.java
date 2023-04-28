@@ -12,9 +12,21 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * Contains methods for reading and modifying data associated with customers in the database.
+ */
 public class CustomerDAO {
+    /**
+     * List of all customers from the database.
+     */
     private static final ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
+    /**
+     * Generates and executes a SQL command to create a new customer using data passed in from a customer object.
+     *
+     * @param customer customer object containing data to be added to the database
+     * @return true if the customer was successfully created
+     */
     public static boolean create(Customer customer) {
             String sql = "INSERT INTO client_schedule.customers VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             try(PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
@@ -38,6 +50,11 @@ public class CustomerDAO {
 
     }
 
+    /**
+     * Generates and executes a SQL command to get all customers from the database and puts them in a list.
+     *
+     * @return observable list of customers
+     */
     public static ObservableList<Customer> getAll() {
         if(allCustomers.isEmpty()) {
                 String sql = "SELECT * FROM client_schedule.customers;";
@@ -66,11 +83,20 @@ public class CustomerDAO {
         return allCustomers;
     }
 
+    /**
+     * Clears data from the allCustomers list and calls the getAll() method to regenerate it from the database.
+     */
     public static void refresh() {
         allCustomers.clear();
         getAll();
     }
 
+    /**
+     * Looks up a specific customer by customer ID.
+     *
+     * @param CustomerId customer ID associated with customer to be found
+     * @return customer if ID was found
+     */
     public static Customer get(int CustomerId) {
         for(Customer c : allCustomers) {
             if(c.getCustomer_ID() == CustomerId) {
@@ -80,6 +106,13 @@ public class CustomerDAO {
         return null;
     }
 
+
+    /**
+     * Generates and executes a SQL command to update an existing customer in the database.
+     *
+     * @param customer customer object containing data to be updated
+     * @return true if the customer was successfully updated
+     */
     public static boolean update(Customer customer) {
             String sql = """
                     UPDATE client_schedule.customers
@@ -112,6 +145,12 @@ public class CustomerDAO {
             }
     }
 
+    /**
+     * Generates and executes a SQL command to delete a customer from the database.
+     *
+     * @param customer customer object containing data to be deleted
+     * @return true if the deletion was successful
+     */
     public static boolean delete(Customer customer) {
             String sql = "DELETE FROM client_schedule.customers WHERE customer_ID = ?;";
             try(PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {

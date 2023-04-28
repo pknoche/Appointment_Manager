@@ -9,9 +9,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Contains methods for reading data used for the Appointments By Month report from the database.
+ */
 public class AppointmentsByMonthDAO {
+    /**
+     * Observable list containing objects that contain data for populating the Appointments By Month report.
+     */
     private static final ObservableList<AppointmentsByMonth> allAppointmentsByMonth = FXCollections.observableArrayList();
 
+    /**
+     * Queries the database to generate data for populating the Appointments By Month report. Generates a table
+     * containing data that shows the number of each appointment type by month.
+     *
+     * @param year the year to generate the report for
+     * @return observable list of objects containing data for populating the Appointments By Month report
+     */
     public static ObservableList<AppointmentsByMonth> getAll(int year) {
         if(allAppointmentsByMonth.isEmpty()) {
                 String sql = """
@@ -57,6 +70,11 @@ public class AppointmentsByMonthDAO {
         return allAppointmentsByMonth;
     }
 
+    /**
+     * Clears data in the allAppointmentsByMonth list and calls the getAll() method to regenerate the data.
+     *
+     * @param year the year to generate the report for
+     */
     public static void refresh(int year) {
         allAppointmentsByMonth.clear();
         getAll(year);

@@ -10,9 +10,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Contains methods for reading and modifying data associated with first level divisions in the database.
+ */
 public class FirstLevelDivisionDAO {
+    /**
+     * List of first level divisions associated with a specific country in the database.
+     */
     private static final ObservableList<FirstLevelDivision> divisionsByCountry = FXCollections.observableArrayList();
 
+    /**
+     * Generates and executes a SQL command to read first level divisions from the database associated with
+     * a specific country.
+     *
+     * @param country country to look up first level divisions for
+     * @return observable list of first level divisions associated with specified country
+     */
     public static ObservableList<FirstLevelDivision> getByCountry(Country country) {
             divisionsByCountry.clear();
             String sql = """
@@ -39,6 +52,11 @@ public class FirstLevelDivisionDAO {
         return divisionsByCountry;
     }
 
+    /**
+     * Looks up a country ID given a division ID.
+     * @param divisionId division ID to look up associated country with
+     * @return country ID if a country corresponding to division ID is found; -1 if no match found
+     */
     public static int getCountryId(int divisionId) {
             String sql = "SELECT Country_ID FROM client_schedule.first_level_divisions WHERE Division_ID = ?;";
             try(PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement(sql)) {
@@ -54,6 +72,12 @@ public class FirstLevelDivisionDAO {
         return -1;
     }
 
+    /**
+     * Looks up a first level division associated with a division ID
+     *
+     * @param divisionId division ID to look up
+     * @return first level division associated with division ID
+     */
     public static FirstLevelDivision get(int divisionId) {
         for(FirstLevelDivision f : divisionsByCountry) {
             if(f.getDivision_ID() == divisionId) {
