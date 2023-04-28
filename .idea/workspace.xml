@@ -7,10 +7,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a89624a1-f6ac-45d0-b30e-9614bbcafad9" name="Changes" comment="Various bug fixes and enhancements">
-      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/MainMenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/controller/MainMenuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/FirstLevelDivisionDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/database/FirstLevelDivisionDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/reports/CustomersByDivision.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pknoche/scheduling_application/reports/CustomersByDivision.java" afterDir="false" />
+    <list default="true" id="a89624a1-f6ac-45d0-b30e-9614bbcafad9" name="Changes" comment="Added JavaDoc comments">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReadMe.md" beforeDir="false" afterPath="$PROJECT_DIR$/ReadMe.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +166,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682624319460</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added JavaDoc comments">
+      <created>1682641085080</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1682641085080</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added JavaDoc comments">
+      <created>1682641172016</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1682641172016</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,7 +204,8 @@
     <MESSAGE value="Implemented appointment and customer create, modify, and delete functionality" />
     <MESSAGE value="Added functionality for generating reports" />
     <MESSAGE value="Various bug fixes and enhancements" />
-    <option name="LAST_COMMIT_MESSAGE" value="Various bug fixes and enhancements" />
+    <MESSAGE value="Added JavaDoc comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added JavaDoc comments" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
