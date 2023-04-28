@@ -4,8 +4,8 @@ import javafx.collections.ObservableList;
 import pknoche.scheduling_application.database.AppointmentDAO;
 import pknoche.scheduling_application.model.Appointment;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 /**
  * Contains method for generating alert for upcoming appointments when logging into the program.
@@ -25,9 +25,9 @@ public class AppointmentAlert {
 
         for (Appointment a : allAppointments) {
             if ((a.getStart().isAfter(now)) && (a.getStart().isBefore(now.plusMinutes(15)))) {
-                long timeUntil = ChronoUnit.MINUTES.between(LocalDateTime.now(), a.getStart());
                 messageBody.append(a.getTitle()).append(" (Appointment ID #").append(a.getAppointment_ID())
-                        .append(") in ").append(timeUntil).append(" minutes\n");
+                        .append(") at ").append(TimeConversion.toFormattedString(a.getStart().toLocalTime())).
+                        append(" on ").append(LocalDate.now()).append("\n");
                 upcomingAppointments ++;
             }
         }
